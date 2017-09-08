@@ -1,4 +1,4 @@
-package jp.co.tis.adc.vote.validation;
+package jp.co.tis.adc.webstudy.validation;
 
 import javax.validation.ConstraintViolation;
 import java.util.LinkedHashSet;
@@ -13,10 +13,9 @@ import java.util.TreeMap;
 */
 public class ValidationResult<T> extends TreeMap<String, Set<String>> {
 
-    private Set<ConstraintViolation<T>> violations;
+    private final Set<ConstraintViolation<T>> violations;
 
-    ValidationResult(
-            Set<ConstraintViolation<T>> violations) {
+    ValidationResult(Set<ConstraintViolation<T>> violations) {
         this.violations = violations;
         for (ConstraintViolation<T> e : violations) {
             String path = e.getPropertyPath().toString();
@@ -38,13 +37,9 @@ public class ValidationResult<T> extends TreeMap<String, Set<String>> {
     }
 
     private Set<String> put(String path, String msg) {
-        Set<String> msgs = get(path);
-        if (msgs == null) {
-            msgs = new LinkedHashSet<>();
-            put(path, msgs);
-        }
-        msgs.add(msg);
-        return msgs;
+        Set<String> messages = computeIfAbsent(path, key -> new LinkedHashSet<>());
+        messages.add(msg);
+        return messages;
     }
     public void forward(String forwardUri) {
         throw new ValidationException(this, forwardUri);

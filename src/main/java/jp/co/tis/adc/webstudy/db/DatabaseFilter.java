@@ -1,4 +1,4 @@
-package jp.co.tis.adc.vote.db;
+package jp.co.tis.adc.webstudy.db;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -12,12 +12,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-/**
- * Created with IntelliJ IDEA.
- * User: kawasaki
- * Date: 13/10/26
- * Time: 23:35
- */
+
 @WebFilter(servletNames = "*")
 public class DatabaseFilter implements Filter {
 

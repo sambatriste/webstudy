@@ -1,4 +1,4 @@
-package jp.co.tis.adc.vote;
+package jp.co.tis.adc.webstudy.member;
 
 import java.util.ArrayList;
 import java.util.List;

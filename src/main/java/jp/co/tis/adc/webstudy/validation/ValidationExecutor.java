@@ -1,4 +1,4 @@
-package jp.co.tis.adc.vote.validation;
+package jp.co.tis.adc.webstudy.validation;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

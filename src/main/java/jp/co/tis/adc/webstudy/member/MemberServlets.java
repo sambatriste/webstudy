@@ -1,9 +1,9 @@
-package jp.co.tis.adc.vote;
+package jp.co.tis.adc.webstudy.member;
 
 
-import jp.co.tis.adc.vote.util.SimpleBeanUtil;
-import jp.co.tis.adc.vote.validation.ValidationExecutor;
-import jp.co.tis.adc.vote.validation.ValidationResult;
+import jp.co.tis.adc.webstudy.util.SimpleBeanUtil;
+import jp.co.tis.adc.webstudy.validation.ValidationExecutor;
+import jp.co.tis.adc.webstudy.validation.ValidationResult;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,16 +15,18 @@ import java.util.List;
 
 public class MemberServlets {
 
+
+
     @WebServlet(name = "memberList", urlPatterns = "/member/list")
     public static class MemberList extends HttpServlet {
         @Override
-        protected void service(HttpServletRequest req,
-                               HttpServletResponse resp)
+        protected void doGet(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
+
             MemberService service = new MemberService();
             List<Member> allMembers = service.getAllMembers();
             req.setAttribute("memberList", allMembers);
-            req.getRequestDispatcher("/pages/memberList.jsp")
+            req.getRequestDispatcher("/pages/member/memberList.jsp")
                .forward(req, resp);
         }
     }
@@ -34,7 +36,9 @@ public class MemberServlets {
         @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
-            req.getRequestDispatcher("/pages/memberInput.jsp").forward(req, resp);
+
+            req.getRequestDispatcher("/pages/member/memberInput.jsp")
+               .forward(req, resp);
         }
     }
 
@@ -48,7 +52,7 @@ public class MemberServlets {
             ValidationResult<Member> result = ValidationExecutor.validate(member);
             if (!result.isValid()) {
                 req.setAttribute("member", member);
-                result.forward("/pages/memberInput.jsp");
+                result.forward("/pages/member/memberInput.jsp");
             }
 
             MemberService service = new MemberService();
@@ -62,15 +66,17 @@ public class MemberServlets {
     @WebServlet(urlPatterns = "/member/search")
     public static class MemberSearch extends HttpServlet {
         @Override
-        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            Member member  = findMember(req, resp);
+        protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
+
+            Member member  = findMember(req);
             if (member == null) {
                 resp.sendError(400);
                 return;
             }
             req.setAttribute("member", member);
 
-            req.getRequestDispatcher("/pages/memberSearch.jsp")
+            req.getRequestDispatcher("/pages/member/memberSearch.jsp")
                .forward(req, resp);
         }
     }
@@ -78,30 +84,32 @@ public class MemberServlets {
     @WebServlet(urlPatterns = "/member/inputForUpdate")
     public static class MemberInputForUpdate extends HttpServlet {
         @Override
-        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
 
-            Member member = findMember(req, resp);
+            Member member = findMember(req);
             if (member == null) {
                 resp.sendError(400);
                 return;
             }
             req.setAttribute("member", member);
-            req.getRequestDispatcher("/pages/memberUpdate.jsp")
+            req.getRequestDispatcher("/pages/member/memberUpdate.jsp")
                .forward(req, resp);
         }
-
     }
 
 
     @WebServlet(urlPatterns = "/member/update")
     public static class MemberUpdate extends HttpServlet {
         @Override
-        protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
+
             Member member = SimpleBeanUtil.create(req.getParameterMap(), Member.class);
             ValidationResult<Member> result = ValidationExecutor.validate(member);
             if (!result.isValid()) {
                 req.setAttribute("member", member);
-                result.forward("/pages/memberUpdate.jsp");
+                result.forward("/pages/member/memberUpdate.jsp");
             }
 
             new MemberService().update(member);
@@ -109,7 +117,7 @@ public class MemberServlets {
         }
     }
 
-    private static Member findMember(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    private static Member findMember(HttpServletRequest req) throws IOException {
         MemberFindForm form = SimpleBeanUtil.create(req.getParameterMap(), MemberFindForm.class);
         ValidationExecutor.validate(form)
                           .sendErrorIfInvalid();

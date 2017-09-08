@@ -35,8 +35,6 @@
     <jsp:include page="/pages/common/footer.jsp"/>
   </div>
 </div>
-<!-- SCRIPTS -->
-<script src="${pageContext.request.contextPath}/js/jquery-1.10.2.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+
 </body>
 </html>

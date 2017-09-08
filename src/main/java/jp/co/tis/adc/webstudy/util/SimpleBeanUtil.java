@@ -1,4 +1,4 @@
-package jp.co.tis.adc.vote.util;
+package jp.co.tis.adc.webstudy.util;
 
 import jodd.bean.BeanUtil;
 

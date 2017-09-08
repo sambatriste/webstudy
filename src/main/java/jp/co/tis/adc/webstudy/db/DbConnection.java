@@ -1,4 +1,4 @@
-package jp.co.tis.adc.vote.db;
+package jp.co.tis.adc.webstudy.db;
 
 import java.sql.Connection;
 

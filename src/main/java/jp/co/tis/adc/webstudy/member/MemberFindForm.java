@@ -1,4 +1,4 @@
-package jp.co.tis.adc.vote;
+package jp.co.tis.adc.webstudy.member;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
