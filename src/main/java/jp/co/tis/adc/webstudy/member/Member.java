@@ -1,8 +1,9 @@
 package jp.co.tis.adc.webstudy.member;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+
 
 public class Member {
 
@@ -52,5 +53,15 @@ public class Member {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", familyName='" + familyName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
     }
 }

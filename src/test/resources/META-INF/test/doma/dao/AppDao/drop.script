@@ -1,0 +1,6 @@
+drop sequence member_seq;
+drop sequence dept_seq;
+
+drop table member;
+drop table dept;
+

@@ -10,6 +10,6 @@ public class DataSourceFactory {
 
     public static DataSource create() {
         return JdbcConnectionPool.create(
-                "jdbc:h2:./h2/test", "sa", "sa");
+                "jdbc:h2:./h2/test;AUTO_SERVER=true", "sa", "sa");
     }
 }
