@@ -1,5 +1,6 @@
 package jp.co.tis.adc.webstudy.util;
 
+import jodd.bean.BeanCopy;
 import jodd.bean.BeanUtil;
 
 import java.util.Map;
@@ -8,6 +9,8 @@ import java.util.Map.Entry;
 public final class SimpleBeanUtil {
 
     public static <T> T create(Map<String, String[]> data, Class<T> clazz) {
+
+        
         final T obj = newInstance(clazz);
         for (Entry<String, String[]> entry : data.entrySet()) {
             String propName = entry.getKey();

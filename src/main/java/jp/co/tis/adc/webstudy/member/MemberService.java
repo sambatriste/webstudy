@@ -21,7 +21,7 @@ class MemberService {
     }
 
     void register(Member member) {
-        members.put(member.getId(), member);
+        add(member);
     }
 
     Member findById(Integer id) {

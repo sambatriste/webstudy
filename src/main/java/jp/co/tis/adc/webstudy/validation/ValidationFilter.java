@@ -6,9 +6,9 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 
 public class ValidationFilter implements Filter {
 
@@ -25,11 +25,11 @@ public class ValidationFilter implements Filter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) res;
         try {
             filter.doFilter(req, res);
-        } catch (ValidationException e) {
+        } catch (ForwardingValidationException e) {
             httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             req.setAttribute(ERRORS, e.getResult());
             req.getRequestDispatcher(e.getForwardUri()).forward(req, res);
-        } catch (BadRequestException e) {
+        } catch (ValidationException e) {
             httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
     }

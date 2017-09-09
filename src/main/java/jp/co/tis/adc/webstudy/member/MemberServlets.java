@@ -15,8 +15,6 @@ import java.util.List;
 
 public class MemberServlets {
 
-
-
     @WebServlet(name = "memberList", urlPatterns = "/member/list")
     public static class MemberList extends HttpServlet {
         @Override

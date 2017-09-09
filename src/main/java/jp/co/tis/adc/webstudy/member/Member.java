@@ -1,5 +1,6 @@
 package jp.co.tis.adc.webstudy.member;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -32,8 +33,8 @@ public class Member {
         this.id = id;
     }
 
-    @NotNull(message = "姓は必須項目です。")
-    @Size(min = 1, message = "姓は1〜64文字で入力してください。")
+    @NotEmpty(message = "姓は必須項目です。")
+    @Size(max = 64, message = "姓は1〜64文字で入力してください。")
     public String getFamilyName() {
         return familyName;
     }
@@ -43,8 +44,8 @@ public class Member {
         this.familyName = familyName;
     }
 
-    @NotNull(message = "名は必須項目です。")
-    @Size(min = 1, max = 64, message = "名は1〜64文字で入力してください。")
+    @NotEmpty(message = "名は必須項目です。")
+    @Size(max = 64, message = "名は1〜64文字で入力してください。")
     public String getLastName() {
         return lastName;
     }

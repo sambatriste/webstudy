@@ -25,7 +25,10 @@ public class ValidationResult<T> extends TreeMap<String, Set<String>> {
     }
 
     public boolean isError(String propertyName) {
-        return containsKey(propertyName);
+        return violations.stream().anyMatch(
+                violation -> violation.getPropertyPath().toString().equals(propertyName)
+        );
+        //return containsKey(propertyName);
     }
 
     public Set<ConstraintViolation<T>> getViolations() {
@@ -42,7 +45,7 @@ public class ValidationResult<T> extends TreeMap<String, Set<String>> {
         return messages;
     }
     public void forward(String forwardUri) {
-        throw new ValidationException(this, forwardUri);
+        throw new ForwardingValidationException(this, forwardUri);
     }
 
     public void forwardIfInvalid(String forwardUri) {
@@ -58,6 +61,6 @@ public class ValidationResult<T> extends TreeMap<String, Set<String>> {
     }
 
     private void sendError() {
-        throw new BadRequestException(this);
+        throw new ValidationException(this);
     }
 }
