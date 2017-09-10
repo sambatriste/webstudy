@@ -1,16 +1,24 @@
 package jp.co.tis.adc.webstudy.util;
 
-import jodd.bean.BeanCopy;
 import jodd.bean.BeanUtil;
 
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+ * 簡易的なBean操作を行うためのユーティリティクラス.
+ */
 public final class SimpleBeanUtil {
 
+    /**
+     * {@code Map<String, String[]>}からBeanを生成する.
+     * @param data 生成元となるMap
+     * @param clazz 生成されるBeanの{@link Class}
+     * @param <T> Beanの型
+     * @return 生成されたBean
+     */
     public static <T> T create(Map<String, String[]> data, Class<T> clazz) {
 
-        
         final T obj = newInstance(clazz);
         for (Entry<String, String[]> entry : data.entrySet()) {
             String propName = entry.getKey();
@@ -27,8 +35,9 @@ public final class SimpleBeanUtil {
         try {
             return clazz.newInstance();
         } catch (InstantiationException |IllegalAccessException e) {
-            throw new IllegalStateException(e);
+            throw new IllegalStateException(
+                    "could not instansiate " + clazz,
+                    e);
         }
-
     }
 }

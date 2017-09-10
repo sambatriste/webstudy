@@ -1,3 +1,4 @@
+<%-- 全JSP共通設定 --%>
 <%@ page contentType="text/html;charset=utf-8"
          pageEncoding="utf-8"
          trimDirectiveWhitespaces="true"

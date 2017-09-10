@@ -1,3 +1,4 @@
+<%-- サイド --%>
 <%--
 <div class="list-group">
   <a class="list-group-item active" href="#">Link</a>
