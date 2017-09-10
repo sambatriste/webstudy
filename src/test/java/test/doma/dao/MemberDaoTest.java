@@ -1,6 +1,9 @@
 package test.doma.dao;
 
 
+import jp.co.tis.adc.webstudy.util.SimpleBeanUtil;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.seasar.doma.jdbc.tx.TransactionManager;
@@ -14,13 +17,24 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assume.assumeNoException;
 
 public class MemberDaoTest {
     @Rule
     public final DbResource dbResource = new DbResource();
 
-    private final MemberDao dao = new MemberDaoImpl();
+
+    private MemberDao dao;
     private TransactionManager tm = AppConfig.singleton().getTransactionManager();
+
+    @Before
+    public void setUp() {
+        try {
+            dao = SimpleBeanUtil.newInstance(MemberDao.class.getName() + "Impl");
+        } catch (RuntimeException e) {
+            assumeNoException(e);
+        }
+    }
 
     @Test
     public void testSelectById() {

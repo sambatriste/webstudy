@@ -15,7 +15,7 @@ import java.util.List;
 
 public class MemberServlets {
 
-    @WebServlet(name = "memberList", urlPatterns = "/member/list")
+    @WebServlet(urlPatterns = "/member/list")
     public static class MemberList extends HttpServlet {
         @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -48,7 +48,7 @@ public class MemberServlets {
 
             Member member = SimpleBeanUtil.create(req.getParameterMap(), Member.class);
             ValidationResult<Member> result = ValidationExecutor.validate(member);
-            if (!result.isValid()) {
+            if (result.isError()) {
                 req.setAttribute("member", member);
                 result.forward("/pages/member/memberInput.jsp");
             }
@@ -105,7 +105,7 @@ public class MemberServlets {
 
             Member member = SimpleBeanUtil.create(req.getParameterMap(), Member.class);
             ValidationResult<Member> result = ValidationExecutor.validate(member);
-            if (!result.isValid()) {
+            if (result.isError()) {
                 req.setAttribute("member", member);
                 result.forward("/pages/member/memberUpdate.jsp");
             }

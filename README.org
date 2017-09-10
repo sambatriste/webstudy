@@ -1,0 +1,156 @@
+#+TITLE: Webアプリ勉強
+
+* ルーティング
+
+Serlvet API3.0から導入された@WebServletを使用する。
+以下の例では、URL"/hello"へGETリクエストが送信された場合、HelloServlet#doGetが起動される。
+
+#+BEGIN_SRC java
+@WebServlet(urlPatterns = "/hello")
+public class HelloServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+    }
+#+END_SRC
+
+* バリデーション
+
+BeanValidationを用いてバリデーションを行う。
+
+** Beanを作成する
+
+バリデーションを行うには、入れ物となるBeanを作成しアノテーションを付与する。
+
+#+BEGIN_SRC java
+public class Member {
+
+    private String name;
+
+    @NotEmpty(message = "名前は必須項目です。")
+    @Size(max = 64, message = "名前は1〜64文字で入力してください。")
+    public String getNameName() {
+        return familyName;
+    }
+}
+#+END_SRC
+
+** Beanを生成する
+
+バリデーションを実行するには、対象となるBeanインスタンスが必要である。
+HttpServletRequestのパラメータからBeanを生成する。
+ユーティリティクラスがあるので、それを利用する。
+
+#+BEGIN_SRC java
+Member member = SimpleBeanUtil.create(req.getParameterMap(), Member.class);
+#+END_SRC
+
+やっていることは単なる値の移送である。
+
+** Validationを実行する
+
+Beanのインスタンスが生成できたら、バリデーションを実行し、
+そのインスタンスが妥当であるか確認する。
+
+#+BEGIN_SRC java
+ValidationResult<Member> result = ValidationExecutor.validate(member);
+if (!result.isValid()) {
+    req.setAttribute("member", member);
+    result.forward("/pages/member/memberInput.jsp");
+}
+#+END_SRC
+
+ValidationExecutorは、BeanValidationを使用する際に必要となる定形処理を行う。
+最終的にはjavax.validation.Validator実装を使用して、
+javax.validation.Validator#validate(T object, Class<?>... groups)を呼び出して
+バリデーションを行っている。
+
+内容は各自でソースコード確認すること。
+
+
+* フォワード
+
+JSP等にフォワードする場合は、SerlvetAPIを使用する。
+
+#+BEGIN_SRC java
+req.getRequestDispatcher("/path/to/forward.jsp")
+   .forward(req, resp);
+#+END_SRC
+
+* Webアプリケーションの起動
+以下のコマンドでアプリケーションサーバ(Jetty)がポート7373で起動する。
+
+#+BEGIN_SRC sh
+mvn jetty:run
+#+END_SRC
+
+http://localhost:7373/hello
+
+
+* DBマイグレーション
+
+flywayを使用してDBマイグレーションを行う。
+
+#+BEGIN_SRC sh
+mvn flyway:migrate
+#+END_SRC
+
+元に戻すには、以下のコマンドを実行する。
+
+#+BEGIN_SRC sh
+mvn flyway:clean
+#+END_SRC
+
+* データベース参照
+
+データベースには[[http://www.h2database.com/][h2 Database]]を使用する。
+
+データベースを参照するには、以下のコマンドを実行する。
+
+#+BEGIN_SRC sh
+mvn exec:java
+#+END_SRC
+
+* データベースアクセス
+
+データベースアクセスフレームワークには[[https://doma.readthedocs.io/][Doma2]]を使用する。
+
+** アノテーションプロセッサ
+
+Doma2はアノテーションプロセッサを使用する。
+コンパイル実行時に、アノテーションが付与されたクラスに対して操作を行う。
+（インタフェースに対して、その実装クラスを自動生成する等）
+
+
+*** アノテーションプロセッサの確認
+
+IntelliJでアノテーションプロセッサを有効にするには以下の手順を行う。
+
+アノテーションプロセッサが有効となっていること確認する。
+Preferencesを開く。
+
+- Build, Execution, Deployment
+  - Compiler
+    - Annotation Processors
+- Maven default annotation processors profile
+- Enable annotation processingをオン
+- Obtain processors from project classpathを選択
+- Store generated source ralative to で Module conent root を選択
+
+
+*** 自動生成されたソースを有効にする
+
+自動生成されたソースを有効にするには以下の手順を行う。
+
+まずビルドを一度実行する。（自動生成出力先ディレクトリを作成するため）
+
+Project Structureを開く。
+
+- Project Settings
+  - Module
+    - WebStudy
+- sourcesタブ
+- target/generated-sources/annotationsをSourcesに設定
+- target/generated-test-sources/test-annotationsをTestsに設定
+

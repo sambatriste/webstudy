@@ -6,11 +6,16 @@ import java.util.Set;
 import java.util.TreeMap;
 
 /**
-* Created with IntelliJ IDEA.
-* User: kawasaki
-* Date: 13/11/04
-* Time: 2:06
-*/
+ * バリデーションの結果を表すクラス。
+ * {@link TreeMap}のサブクラスであり、
+ * <ul>
+ * <li>キー:エラーとなったプロパティ名</li>
+ * <li>値:エラーメッセージ</li>
+ * </ul>
+ * を保持している。
+ *
+ * @param <T> バリデーション対象となったBeanの型
+ */
 public class ValidationResult<T> extends TreeMap<String, Set<String>> {
 
     private final Set<ConstraintViolation<T>> violations;
@@ -28,11 +33,14 @@ public class ValidationResult<T> extends TreeMap<String, Set<String>> {
         return violations.stream().anyMatch(
                 violation -> violation.getPropertyPath().toString().equals(propertyName)
         );
-        //return containsKey(propertyName);
     }
 
     public Set<ConstraintViolation<T>> getViolations() {
         return violations;
+    }
+
+    public boolean isError() {
+        return !isValid();
     }
 
     public boolean isValid() {
