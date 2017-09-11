@@ -90,7 +90,7 @@ http://localhost:7373/hello
 
 * DBマイグレーション
 
-flywayを使用してDBマイグレーションを行う。
+[[https://flywaydb.org/][Flyway]]を使用してDBマイグレーションを行う。
 
 #+BEGIN_SRC sh
 mvn flyway:migrate
@@ -104,7 +104,7 @@ mvn flyway:clean
 
 * データベース参照
 
-データベースには[[http://www.h2database.com/][h2 Database]]を使用する。
+データベースには[[http://www.h2database.com/][H2 Database]]を使用する。
 
 データベースを参照するには、以下のコマンドを実行する。
 
@@ -136,7 +136,7 @@ Preferencesを開く。
 - Maven default annotation processors profile
 - Enable annotation processingをオン
 - Obtain processors from project classpathを選択
-- Store generated source ralative to で Module conent root を選択
+- Store generated source relative to で Module content root を選択
 
 
 *** 自動生成されたソースを有効にする
@@ -154,3 +154,8 @@ Project Structureを開く。
 - target/generated-sources/annotationsをSourcesに設定
 - target/generated-test-sources/test-annotationsをTestsに設定
 
+** Doma Support Plugin
+
+IntelliJ用プラグインをインストールする。
+
+https://github.com/siosio/DomaSupport/releases
