@@ -74,10 +74,9 @@ public class ValidationResult<T> extends TreeMap<String, Set<String>> {
         return violations.isEmpty();
     }
 
-    private Set<String> put(String path, String msg) {
+    private void put(String path, String msg) {
         Set<String> messages = computeIfAbsent(path, key -> new LinkedHashSet<>());
         messages.add(msg);
-        return messages;
     }
 
     /**
