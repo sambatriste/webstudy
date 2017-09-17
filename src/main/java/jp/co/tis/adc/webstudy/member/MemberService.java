@@ -1,5 +1,7 @@
 package jp.co.tis.adc.webstudy.member;
 
+import jp.co.tis.adc.webstudy.entity.Member;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,35 +10,25 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 class MemberService {
 
-    private static final Map<Integer, Member> members = new ConcurrentHashMap<>();
-
-    private static final AtomicInteger idGenerator = new AtomicInteger(1);
-    static {
-        add(new Member("山田", "太郎"));
-        add(new Member("田中", "次郎"));
-    }
+    private final MemberDao dao = new MockMemberDao();
 
     List<Member> getAllMembers() {
-        return new ArrayList<>(members.values());
+        return dao.selectAll();
     }
 
     void register(Member member) {
-        add(member);
+        dao.insert(member);
     }
 
-    Member findById(Integer id) {
-        return members.get(id);
+    Member findById(Integer memberId) {
+        return dao.selectById(memberId);
     }
 
     void update(Member member) {
-        members.put(member.getId(), member);
+        dao.update(member);
     }
 
-    private static void add(Member member) {
-        int newId = idGenerator.getAndIncrement();
-        member.setId(newId);
-        members.put(newId, member);
+    void delete(Member member) {
+        dao.delete(member);
     }
-
-
 }

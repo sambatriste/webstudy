@@ -13,16 +13,25 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-
-    <db.url>jdbc:h2:file:./h2/test;AUTO_SERVER=true</db.url>
+    <!-- データベース設定 -->
+    <db.main.url>jdbc:h2:file:./h2/webstudy-main;AUTO_SERVER=true</db.main.url>
+    <db.test.url>jdbc:h2:file:./h2/webstudy-test</db.test.url>
+    <db.url>${db.main.url}</db.url>
     <db.user>sa</db.user>
     <db.password>sa</db.password>
-
     <doma.version>2.17.0</doma.version>
   </properties>
 
+  <profiles>
+    <profile>
+      <id>unit-test</id>
+      <properties>
+        <db.url>${db.test.url}</db.url>
+      </properties>
+    </profile>
+  </profiles>
   <dependencies>
-
+    <!-- Servlet API -->
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
@@ -30,8 +39,9 @@
       <scope>provided</scope>
     </dependency>
 
+    <!-- Bean Validation -->
     <dependency>
-      <groupId>org.hibernate</groupId>
+      <groupId>org.hibernate.validator</groupId>
       <artifactId>hibernate-validator</artifactId>
       <version>6.0.2.Final</version>
     </dependency>
@@ -42,34 +52,40 @@
       <scope>runtime</scope>
     </dependency>
 
+    <!-- Utilities (BeanUtil)-->
     <dependency>
       <groupId>org.jodd</groupId>
       <artifactId>jodd-bean</artifactId>
       <version>3.9</version>
     </dependency>
+
+
+    <!-- Database -->
     <dependency>
       <groupId>org.seasar.doma</groupId>
       <artifactId>doma</artifactId>
       <version>${doma.version}</version>
     </dependency>
-
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <version>1.4.196</version>
+      <scope>runtime</scope>
     </dependency>
 
-
+    <!-- Testing -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.12</version>
       <scope>test</scope>
     </dependency>
+
   </dependencies>
 
   <build>
     <plugins>
+      <!-- アノテーションプロセッサの設定 -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -84,6 +100,10 @@
           </annotationProcessorPaths>
         </configuration>
       </plugin>
+      <!--
+       アプリケーションサーバ起動
+        mvn jetty:run
+        -->
       <plugin>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
@@ -94,6 +114,10 @@
           </httpConnector>
         </configuration>
       </plugin>
+      <!--
+       データベースマイグレーション
+        mvn flyway:migrate
+        -->
       <plugin>
         <groupId>org.flywaydb</groupId>
         <artifactId>flyway-maven-plugin</artifactId>
@@ -103,7 +127,24 @@
           <user>${db.user}</user>
           <password>${db.password}</password>
         </configuration>
+        <executions>
+          <execution>
+            <id>test</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>clean</goal>
+              <goal>migrate</goal>
+            </goals>
+            <configuration>
+              <url>${db.test.url}</url>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
+      <!--
+       H2コンソールの起動
+       mvn exec:java
+      -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>

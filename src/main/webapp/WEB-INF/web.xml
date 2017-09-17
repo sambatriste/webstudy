@@ -7,27 +7,6 @@
 
   <display-name>Archetype Created Web Application</display-name>
 
-  <filter>
-    <filter-name>ValidationFilter</filter-name>
-    <filter-class>jp.co.tis.adc.webstudy.validation.ValidationFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>ValidationFilter</filter-name>
-    <servlet-name>*</servlet-name>
-  </filter-mapping>
-
-  <!--
-  <filter>
-    <filter-name>DatabaseFilter</filter-name>
-    <filter-class>jp.co.tis.adc.webstudy.db.DatabaseFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>DatabaseFilter</filter-name>
-    <servlet-name>*</servlet-name>
-  </filter-mapping>
--->
-
-
   <jsp-config>
     <jsp-property-group>
       <url-pattern>*.jsp</url-pattern>

@@ -1,23 +1,31 @@
 package jp.co.tis.adc.webstudy.member;
 
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+/**
+ * メンバー検索用フォーム。
+ */
 public class MemberFindForm {
 
-    private String id;
-
-    @NotNull
+    @NotEmpty
     @Digits(integer = 9, fraction = 0)
-    public String getId() {
-        return id;
+    private String memberId;
+
+    public String getMemberId() {
+        return memberId;
     }
 
-    public Integer getParsedId() {
-        return Integer.parseInt(id);
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    /**
+     * {@link Integer}変換したメンバーIDを取得する。
+     * @return メンバーID
+     */
+    Integer getParsedMemberId() {
+        return Integer.parseInt(memberId);
     }
 }

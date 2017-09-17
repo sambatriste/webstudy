@@ -30,17 +30,6 @@ public final class SimpleBeanUtil {
         return obj;
     }
 
-    /**
-     * クラスの完全修飾名からインスタンスを生成する。
-     * @param fqcn 完全修飾名
-     * @param <T> クラスの型
-     * @return インスタンス
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> T newInstance(String fqcn) {
-        Class<?> clazz = forName(fqcn);
-        return (T) newInstance(clazz);
-    }
 
     /**
      * 指定された{@link Class}からそのインスタンスを生成する。
@@ -55,22 +44,6 @@ public final class SimpleBeanUtil {
             throw new IllegalStateException(
                     "could not instansiate [" + clazz + "]",
                     e);
-        }
-    }
-
-    /**
-     * 完全修飾名からその{@link Class}を取得する。
-     * @param fqcn 完全修飾名
-     * @return {@link Class}
-     */
-    public static Class<?> forName(String fqcn) {
-        try {
-            return Class.forName(fqcn);
-        } catch (ClassNotFoundException e) {
-            throw new IllegalArgumentException(
-                    "could not find class [" + fqcn + "].",
-                    e
-            );
         }
     }
 }

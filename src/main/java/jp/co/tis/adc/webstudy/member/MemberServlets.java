@@ -1,6 +1,7 @@
 package jp.co.tis.adc.webstudy.member;
 
 
+import jp.co.tis.adc.webstudy.entity.Member;
 import jp.co.tis.adc.webstudy.util.SimpleBeanUtil;
 import jp.co.tis.adc.webstudy.validation.ValidationExecutor;
 import jp.co.tis.adc.webstudy.validation.ValidationResult;
@@ -13,8 +14,22 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * メンバーサーブレット。
+ */
 public class MemberServlets {
 
+    /** インデックス */
+    @WebServlet(urlPatterns = {"/member", "member/index"})
+    public static class Index extends HttpServlet {
+        @Override
+        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+            req.getRequestDispatcher("/pages/member/index.jsp")
+               .forward(req, resp);
+        }
+    }
+
+    /** 一覧 */
     @WebServlet(urlPatterns = "/member/list")
     public static class MemberList extends HttpServlet {
         @Override
@@ -29,6 +44,7 @@ public class MemberServlets {
         }
     }
 
+    /** 入力 */
     @WebServlet(urlPatterns = "/member/inputForRegister")
     public static class MemberInputForRegister extends HttpServlet {
         @Override
@@ -40,6 +56,7 @@ public class MemberServlets {
         }
     }
 
+    /** 登録 */
     @WebServlet(urlPatterns = "/member/register")
     public static class MemberRegister extends HttpServlet {
         @Override
@@ -60,14 +77,14 @@ public class MemberServlets {
 
     }
 
-
+    /** 検索 */
     @WebServlet(urlPatterns = "/member/search")
     public static class MemberSearch extends HttpServlet {
         @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
 
-            Member member  = findMember(req);
+            Member member = findMember(req);
             if (member == null) {
                 resp.sendError(400);
                 return;
@@ -79,6 +96,7 @@ public class MemberServlets {
         }
     }
 
+    /** 変更 */
     @WebServlet(urlPatterns = "/member/inputForUpdate")
     public static class MemberInputForUpdate extends HttpServlet {
         @Override
@@ -96,7 +114,7 @@ public class MemberServlets {
         }
     }
 
-
+    /** 更新 */
     @WebServlet(urlPatterns = "/member/update")
     public static class MemberUpdate extends HttpServlet {
         @Override
@@ -115,11 +133,17 @@ public class MemberServlets {
         }
     }
 
-    private static Member findMember(HttpServletRequest req) throws IOException {
+    /**
+     * メンバーを検索する。
+     *
+     * @param req リクエスト
+     * @return メンバー
+     */
+    private static Member findMember(HttpServletRequest req) {
         MemberFindForm form = SimpleBeanUtil.create(req.getParameterMap(), MemberFindForm.class);
         ValidationExecutor.validate(form)
                           .sendErrorIfInvalid();
-        return new MemberService().findById(form.getParsedId());
+        return new MemberService().findById(form.getParsedMemberId());
     }
 
 }

@@ -1,6 +1,5 @@
-package test.doma;
+package jp.co.tis.adc.webstudy.db;
 
-import org.seasar.doma.SingletonConfig;
 import org.seasar.doma.jdbc.Config;
 import org.seasar.doma.jdbc.Naming;
 import org.seasar.doma.jdbc.dialect.Dialect;
@@ -11,22 +10,29 @@ import org.seasar.doma.jdbc.tx.TransactionManager;
 
 import javax.sql.DataSource;
 
-@SingletonConfig
-public class AppConfig implements Config {
+/**
+ * {@link Config}実装の基底クラス。
+ */
+public abstract class AppConfigBase implements Config {
 
-    private static final AppConfig CONFIG = new AppConfig();
+    /** 方言 */
+    private final Dialect dialect = new H2Dialect();
 
-    private final Dialect dialect;
-
+    /** データソース */
     private final LocalTransactionDataSource dataSource;
 
+    /** トランザクションマネージャ */
     private final TransactionManager transactionManager;
 
-    private AppConfig() {
-        dialect = new H2Dialect();
-        dataSource = new LocalTransactionDataSource(
-                "jdbc:h2:mem:tutorial;DB_CLOSE_DELAY=-1", "sa", null);
-        transactionManager = new LocalTransactionManager(
+    /**
+     * コンストラクタ。
+     * @param url URL
+     * @param user ユーザ
+     * @param password パスワード
+     */
+    protected AppConfigBase(String url, String user, String password) {
+        this.dataSource = new LocalTransactionDataSource(url, user, password);
+        this.transactionManager = new LocalTransactionManager(
                 dataSource.getLocalTransaction(getJdbcLogger()));
     }
 
@@ -40,6 +46,7 @@ public class AppConfig implements Config {
         return dataSource;
     }
 
+
     @Override
     public TransactionManager getTransactionManager() {
         return transactionManager;
@@ -48,9 +55,5 @@ public class AppConfig implements Config {
     @Override
     public Naming getNaming() {
         return Naming.SNAKE_LOWER_CASE;
-    }
-
-    public static AppConfig singleton() {
-        return CONFIG;
     }
 }
