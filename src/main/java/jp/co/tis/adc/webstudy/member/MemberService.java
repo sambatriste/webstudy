@@ -1,6 +1,7 @@
 package jp.co.tis.adc.webstudy.member;
 
 import jp.co.tis.adc.webstudy.entity.Member;
+import org.seasar.doma.Dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 class MemberService {
 
-    private final MemberDao dao = new MockMemberDao();
+    private final MemberDao dao;
+
+    MemberService() {
+        this(new MockMemberDao());
+    }
+
+    MemberService(MemberDao dao) {
+        this.dao = dao;
+    }
 
     List<Member> getAllMembers() {
         return dao.selectAll();

@@ -29,7 +29,7 @@ public class ValidationExecutor<T> {
      * @param <T> バリデーション対象となるBeanの型
      * @return インスタンス
      */
-    public static <T> ValidationExecutor<T> create(T bean) {
+    public static <T> ValidationExecutor<T> newInstance(T bean) {
         return new ValidationExecutor<>(bean);
     }
 
@@ -40,7 +40,7 @@ public class ValidationExecutor<T> {
      * @return バリデーションの結果
      */
     public static <T> ValidationResult<T> validate(T bean) {
-        return create(bean).validate();
+        return newInstance(bean).validate();
     }
 
     /**

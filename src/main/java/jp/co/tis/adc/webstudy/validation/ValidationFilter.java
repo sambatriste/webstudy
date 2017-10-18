@@ -14,14 +14,14 @@ import java.io.IOException;
  * バリデーションの結果を反映するサーブレットフィルタ.
  *
  * バリデーション失敗時の例外{@link ValidationException}、
- * {@link ForwardingValidationException}を捕捉し、
+ * {@link ValidationException}を捕捉し、
  * リクエストスコープに、バリデーション結果を設定する。
  * （キー{@link #ERRORS}、値{@link ValidationResult}）
  * 設定された値は画面レンダリング時に使用できる。
  *
- * {@link ForwardingValidationException}を捕捉した場合、
+ * {@link ValidationException}を捕捉した場合、
  * その例外に設定されたフォワード先に遷移する。
- * ){@link ForwardingValidationException#getForwardUri()}
+ * ){@link ValidationException#getForwardUri()}
  *
  */
 @WebFilter(urlPatterns = "*")
@@ -43,14 +43,17 @@ public class ValidationFilter implements Filter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) res;
         try {
             filter.doFilter(req, res);
-        } catch (ForwardingValidationException e) {
-            httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            req.setAttribute(ERRORS, e.getResult());
-            req.getRequestDispatcher(e.getForwardUri()).forward(req, res);
         } catch (ValidationException e) {
-            httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            req.setAttribute(ERRORS, e.getResult());
+            httpServletResponse.setStatus(e.getStatusCode());
+            req.getRequestDispatcher(e.getForwardUri())
+               .forward(req, res);
+        } catch (ClientErrorException e) {
+            httpServletResponse.sendError(e.getStatusCode());
         }
     }
+
+
 
     @Override
     public void destroy() {

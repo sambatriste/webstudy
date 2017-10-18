@@ -3,6 +3,8 @@ package jp.co.tis.adc.webstudy.member;
 
 import jp.co.tis.adc.webstudy.entity.Member;
 import jp.co.tis.adc.webstudy.util.SimpleBeanUtil;
+import jp.co.tis.adc.webstudy.validation.ClientErrorException;
+import jp.co.tis.adc.webstudy.validation.ValidationException;
 import jp.co.tis.adc.webstudy.validation.ValidationExecutor;
 import jp.co.tis.adc.webstudy.validation.ValidationResult;
 
@@ -67,7 +69,7 @@ public class MemberServlets {
             ValidationResult<Member> result = ValidationExecutor.validate(member);
             if (result.isError()) {
                 req.setAttribute("member", member);
-                result.forward("/pages/member/memberInput.jsp");
+                throw new ValidationException(result, "/pages/member/memberInput.jsp");
             }
 
             MemberService service = new MemberService();
@@ -84,13 +86,8 @@ public class MemberServlets {
         protected void doGet(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
 
-            Member member = findMember(req);
-            if (member == null) {
-                resp.sendError(400);
-                return;
-            }
+            Member member = findMember(req, resp);
             req.setAttribute("member", member);
-
             req.getRequestDispatcher("/pages/member/memberSearch.jsp")
                .forward(req, resp);
         }
@@ -103,11 +100,7 @@ public class MemberServlets {
         protected void doGet(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
 
-            Member member = findMember(req);
-            if (member == null) {
-                resp.sendError(400);
-                return;
-            }
+            Member member = findMember(req, resp);
             req.setAttribute("member", member);
             req.getRequestDispatcher("/pages/member/memberUpdate.jsp")
                .forward(req, resp);
@@ -125,7 +118,7 @@ public class MemberServlets {
             ValidationResult<Member> result = ValidationExecutor.validate(member);
             if (result.isError()) {
                 req.setAttribute("member", member);
-                result.forward("/pages/member/memberUpdate.jsp");
+                throw new ValidationException(result, "/pages/member/memberUpdate.jsp");
             }
 
             new MemberService().update(member);
@@ -133,17 +126,17 @@ public class MemberServlets {
         }
     }
 
-    /**
-     * メンバーを検索する。
-     *
-     * @param req リクエスト
-     * @return メンバー
-     */
-    private static Member findMember(HttpServletRequest req) {
+    private static Member findMember(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         MemberFindForm form = SimpleBeanUtil.create(req.getParameterMap(), MemberFindForm.class);
-        ValidationExecutor.validate(form)
-                          .sendErrorIfInvalid();
-        return new MemberService().findById(form.getParsedMemberId());
+        ValidationResult<MemberFindForm> result = ValidationExecutor.validate(form);
+        if (result.isError()) {
+            throw new ClientErrorException();
+        }
+        Member member = new MemberService().findById(form.getParsedMemberId());
+        if (member == null) {
+            throw new ClientErrorException(404);
+        }
+        return member;
     }
 
 }

@@ -2,7 +2,7 @@
 
 * ルーティング
 
-Serlvet API3.0から導入された@WebServletを使用する。
+Servlet API3.0から導入された@WebServletを使用する。
 以下の例では、URL"/hello"へGETリクエストが送信された場合、HelloServlet#doGetが起動される。
 
 #+BEGIN_SRC java
@@ -55,16 +55,18 @@ Beanのインスタンスが生成できたら、バリデーションを実行�
 
 #+BEGIN_SRC java
 ValidationResult<Member> result = ValidationExecutor.validate(member);
-if (!result.isValid()) {
+if (result.isError()) {
     req.setAttribute("member", member);
-    result.forward("/pages/member/memberInput.jsp");
+    throw new ValidationException(result, "/pages/member/memberUpdate.jsp");
 }
 #+END_SRC
 
 ValidationExecutorは、BeanValidationを使用する際に必要となる定形処理を行う。
-最終的にはjavax.validation.Validator実装を使用して、
-javax.validation.Validator#validate(T object, Class<?>... groups)を呼び出して
-バリデーションを行っている。
+最終的にはjavax.validation.Validator実装を使用し、
+
+- javax.validation.Validator#validate(T object, Class<?>... groups)
+
+を呼び出してバリデーションを行っている。
 
 内容は各自でソースコード確認すること。
 

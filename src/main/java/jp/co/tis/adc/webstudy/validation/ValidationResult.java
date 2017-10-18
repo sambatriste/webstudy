@@ -79,54 +79,5 @@ public class ValidationResult<T> extends TreeMap<String, Set<String>> {
         messages.add(msg);
     }
 
-    /**
-     * 指定されたURIへフォワードする。
-     * {@link ForwardingValidationException}をスローする。
-     * 例外は{@link ValidationFilter}で捕捉される。
-     *
-     * @param forwardUri フォワード先
-     * @throws ForwardingValidationException 必ず送出される
-     */
-    public void forward(String forwardUri) {
-        throw new ForwardingValidationException(this, forwardUri);
-    }
 
-    /**
-     * バリデーションエラーが存在する場合、指定されたURIへフォワードする。
-     *
-     * @param forwardUri フォワード先
-     * @throws ForwardingValidationException 必ず送出される
-     * @see #isError()
-     * @see #forward(String)
-     */
-    public void forwardIfInvalid(String forwardUri) {
-        if (isError()) {
-            forward(forwardUri);
-        }
-    }
-
-    /**
-     * バリデーションエラーが存在する場合、エラーとする。
-     *
-     * @throws ValidationException 必ず送出される
-     * @see #isError()
-     * @see #sendError()
-     */
-    public void sendErrorIfInvalid() {
-        if (isError()) {
-            sendError();
-        }
-    }
-
-    /**
-     * エラーを送信する。
-     *
-     * {@link ValidationException}をスローする。
-     * 例外は{@link ValidationFilter}で捕捉される。
-     *
-     * @throws ValidationException 必ず送出される
-     */
-    public void sendError() {
-        throw new ValidationException(this);
-    }
 }

@@ -10,6 +10,7 @@ import org.seasar.doma.jdbc.entity.NamingType;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.Map;
 
 /**
  * メンバー。
@@ -28,7 +29,7 @@ public class Member {
 
     @NotEmpty(message = "名を入力してください。")
     @Size(max = 64, message = "名は1〜64文字で入力してください。")
-    private  String lastName;
+    private String lastName;
 
     private Integer deptId;
 

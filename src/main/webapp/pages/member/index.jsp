@@ -6,8 +6,8 @@
   </head>
   <body>
     <ul>
-      <li><a href='list'>一覧</a></li>
-      <li><a href='inputForRegister'>入力</a></li>
+      <li><a href='/member/list'>一覧</a></li>
+      <li><a href='/member/inputForRegister'>入力</a></li>
     </ul>
   </body>
 </html>
