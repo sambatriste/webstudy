@@ -8,7 +8,7 @@ public class ClientErrorException extends RuntimeException {
         this(400);
     }
     public ClientErrorException(int statusCode) {
-        if (400 <= statusCode && statusCode < 500) {
+        if (statusCode < 400 || 500 < statusCode) {
             throw new IllegalArgumentException("invalid status code [" + statusCode + "].");
         }
         this.statusCode = statusCode;
