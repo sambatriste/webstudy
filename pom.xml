@@ -14,7 +14,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <!-- データベース設定 -->
-    <db.main.url>jdbc:h2:file:./h2/webstudy-main;AUTO_SERVER=true</db.main.url>
+    <db.main.url>jdbc:h2:file:./h2/webstudy-main</db.main.url>
     <db.test.url>jdbc:h2:file:./h2/webstudy-test</db.test.url>
     <db.url>${db.main.url}</db.url>
     <db.user>sa</db.user>
@@ -160,7 +160,7 @@
           <arguments>
             <argument>-web</argument>
             <argument>-url</argument>
-            <argument>${db.url}</argument>
+            <argument>${db.url};AUTO_SERVER=true</argument>
             <argument>-user</argument>
             <argument>${db.user}</argument>
             <argument>-password</argument>
