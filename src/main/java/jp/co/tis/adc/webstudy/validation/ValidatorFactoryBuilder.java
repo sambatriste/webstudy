@@ -26,6 +26,10 @@ public class ValidatorFactoryBuilder implements ServletContextListener {
         Initializer.validatorFactory.close();
     }
 
+    static ValidatorFactory getValidatorFactory() {
+        return Initializer.validatorFactory;
+    }
+
     /**
      * {@link Validator}のインスタンスを取得する。
      *

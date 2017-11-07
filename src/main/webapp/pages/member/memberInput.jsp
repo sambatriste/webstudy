@@ -14,7 +14,9 @@
                class="form-control"
                placeholder="山田"
                value="${param.familyName}">
-        <t:error target="familyName"/>
+        <c:forEach var="msg" items="${requestScope.errors['familyName']}">
+          <span><c:out value="${msg}"/></span>
+        </c:forEach>
       </div>
       <div>
         <label for="lastName">名</label>
@@ -24,7 +26,9 @@
                class="form-control"
                placeholder="太郎"
                value="${param.lastName}">
-        <t:error target="lastName"/>
+        <c:forEach var="msg" items="${requestScope.errors['lastName']}">
+          <span><c:out value="${msg}"/></span>
+        </c:forEach>
       </div>
       <div>
         <input type="submit" value="登録">
