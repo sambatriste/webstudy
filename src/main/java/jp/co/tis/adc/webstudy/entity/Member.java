@@ -6,11 +6,9 @@ import org.seasar.doma.GenerationType;
 import org.seasar.doma.Id;
 import org.seasar.doma.SequenceGenerator;
 import org.seasar.doma.Version;
-import org.seasar.doma.jdbc.entity.NamingType;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.Map;
 
 /**
  * メンバー。

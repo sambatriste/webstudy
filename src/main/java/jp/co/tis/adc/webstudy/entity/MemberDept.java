@@ -1,7 +1,6 @@
 package jp.co.tis.adc.webstudy.entity;
 
 import org.seasar.doma.Entity;
-import org.seasar.doma.jdbc.entity.NamingType;
 
 /**
  * メンバーと部署の結合。
