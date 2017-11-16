@@ -56,8 +56,7 @@ Beanのインスタンスが生成できたら、バリデーションを実行�
 #+BEGIN_SRC java
 ValidationResult<Member> result = ValidationExecutor.validate(member);
 if (result.isError()) {
-    req.setAttribute("member", member);
-    throw new ValidationException(result, "/pages/member/memberUpdate.jsp");
+   // エラー時の処理...
 }
 #+END_SRC
 
