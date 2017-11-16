@@ -1,0 +1,126 @@
+#+TITLE: セットアップ
+
+* ソフトウェアのインストール
+
+** JDK
+
+- Oracle JDK8
+
+** IDE
+
+- IntelliJ Community2017
+が、任意のIDEを使用してよい（ただし質問は受け付けない）。
+
+** ビルドツール
+
+- Maven 3.3.9(or later)
+
+IntelliJを使用する場合、上記バージョンが組み込まれている。
+
+
+** SCM
+
+- Git
+
+[[https://qiita.com/sambatriste/items/98f79cad3de9782f65b6][プロキシ内/外両方のGitリポジトリにアクセスする設定]]
+
+* プロジェクト設定
+
+** Git
+
+*** とりあえずお試し
+
+#+BEGIN_SRC sh
+git clone https://github.com/sambatriste/webstudy.git
+#+END_SRC
+
+*** 宿題をやるとき
+
+https://github.com/sambatriste/webstudy
+をforkして、Pull Requestを作成する。
+
+そのPull Requestをみてレビューをする。
+
+
+* Webアプリケーションの起動
+以下のコマンドでアプリケーションサーバ(Jetty)がポート7373で起動する。
+
+#+BEGIN_SRC sh
+mvn jetty:run
+#+END_SRC
+
+http://localhost:7373/hello
+にアクセスする。
+
+
+** DBマイグレーション
+
+[[https://flywaydb.org/][Flyway]]を使用してDBマイグレーションを行う。
+
+#+BEGIN_SRC sh
+mvn flyway:migrate
+#+END_SRC
+
+元に戻すには、以下のコマンドを実行する。
+
+#+BEGIN_SRC sh
+mvn flyway:clean
+#+END_SRC
+
+** データベース参照
+
+データベースには[[http://www.h2database.com/][H2 Database]]を使用する。
+
+データベースを参照するには、以下のコマンドを実行する。
+
+#+BEGIN_SRC sh
+mvn exec:java
+#+END_SRC
+
+** データベースアクセス
+
+データベースアクセスフレームワークには[[https://doma.readthedocs.io/][Doma2]]を使用する。
+
+*** アノテーションプロセッサ
+
+Doma2はアノテーションプロセッサを使用する。
+コンパイル実行時に、アノテーションが付与されたクラスに対して操作を行う。
+（インタフェースに対して、その実装クラスを自動生成する等）
+
+
+**** アノテーションプロセッサの確認
+
+IntelliJでアノテーションプロセッサを有効にするには以下の手順を行う。
+
+アノテーションプロセッサが有効となっていること確認する。
+Preferencesを開く。
+
+- Build, Execution, Deployment
+  - Compiler
+    - Annotation Processors
+- Maven default annotation processors profile
+- Enable annotation processingをオン
+- Obtain processors from project classpathを選択
+- Store generated source relative to で Module content root を選択
+
+
+**** 自動生成されたソースを有効にする
+
+自動生成されたソースを有効にするには以下の手順を行う。
+
+まずビルドを一度実行する。（自動生成出力先ディレクトリを作成するため）
+
+Project Structureを開く。
+
+- Project Settings
+  - Module
+    - WebStudy
+- sourcesタブ
+- target/generated-sources/annotationsをSourcesに設定
+- target/generated-test-sources/test-annotationsをTestsに設定
+
+*** Doma Support Plugin
+
+IntelliJ用プラグインをインストールする。
+
+https://github.com/siosio/DomaSupport/releases
