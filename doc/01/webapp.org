@@ -1,0 +1,147 @@
+* Webアプリケーションの仕組み
+
+** HTTP
+
+HTTPは、1回ずつリクエスト/レスポンスで構成される。
+
+ApacheなどのWebサーバは通常、静的コンテンツ（≒ファイル）のみを扱う。
+例えば、以下のリクエストに対しては、
+
+#+BEGIN_SRC txt
+GET /index.html HTTP/1.1
+#+END_SRC
+
+ドキュメントルート配下にあるindex.htmlファイルをレスポンスとして返却する。
+ブラウザはレスポンスとして受け取ったhtmlファイルを画面に表示する。
+
+#+BEGIN_SRC plantuml :file static-http.png :cmdline -charset UTF-8
+hide footbox
+participant Browser
+participant WebServer
+participant File
+
+Browser -> WebServer : Request(GET /index.html)
+WebServer -> File : ファイル読み込み
+Browser <-- WebServer : Response(index.html)
+#+END_SRC
+
+#+RESULTS:
+[[file:static-http.png]]
+
+** Webアプリケーション
+
+リクエストを受け取り、 *動的* にレスポンスを生成する。
+
+
+*** src/test/java/webstudy/HelloServer.java
+
+以下のコードを見ればわかるとおり、HTTP通信といっても
+文字列を受け取って（リクエスト）文字列を返す（レスポンス）
+ということをしているだけ。
+
+#+BEGIN_SRC java
+public class HelloServer {
+
+    public static void main(String[] args) throws IOException {
+        HelloServer helloServer = new HelloServer();
+        helloServer.hello();
+    }
+
+    private void hello() throws IOException {
+        try (ServerSocket serverSocket = new ServerSocket(8088);
+             Socket socket = serverSocket.accept();
+             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))) {
+
+            String line;
+            do {
+                line = in.readLine();
+                System.out.println(line);
+            } while (!line.isEmpty());
+
+            out.write("HTTP/1.1 200 OK\r\n");
+            out.write("Content-Type: text/html; charset=utf-8\r\n");
+            out.write("\r\n");
+            out.write("<!DOCTYPE html>");
+            out.write("<h1>hello!</h1>");
+            out.flush();
+        }
+    }
+}
+#+END_SRC
+
+*** src/main/java/webstudy/HelloServlet.java
+
+Servletを使った場合でも同じ。
+
+#+BEGIN_SRC java
+@WebServlet(urlPatterns = "/hello")
+public class HelloServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        resp.setContentType("text/html");
+
+        String sayHelloTo = req.getParameter("to");
+        if (sayHelloTo == null) {
+            sayHelloTo = "World";
+        }
+
+        PrintWriter w = resp.getWriter();
+        w.println("<!DOCTYPE html>");
+        w.println("<html lang='ja'>");
+        w.println("<h1>Welcome</h1>");
+        w.println("Hello " + sayHelloTo + "!</h1>");
+        w.println("</html>");
+    }
+}
+#+END_SRC
+
+
+入力は以下のようなものとなる。
+
+- URL
+  - クエリ文字列
+- HTTPリクエストヘッダ
+- HTTPリクエストボディ
+  - Formの中身
+
+
+
+** Webアプリケーションの主要要素
+
+| 要素                 | 説明                                                 |
+|----------------------+------------------------------------------------------|
+| ルーティング         | リクエストURL等を元に起動する処理を決定する          |
+| バリデーション       | 入力値が妥当であるか判定する。                       |
+| データベースアクセス | 検索/登録/更新/削除を行う。                          |
+| レンダリング         | 計算結果、検索結果などを表示するためのHTMLを生成する |
+
+
+*** ルーティング
+
+主にHTTPメソッド、URLを元に、起動する処理を決定する。これをルーティングと呼ぶ。
+
+
+*** バリデーション
+
+入力された値（クエリ文字列やFormの値）は必ずバリデーションを実施する。
+入力値が妥当でない場合は、ユーザに通知する（エラーのHTTPレスポンスを返却する）。
+
+*** データベースアクセス
+
+狭義のWebアプリケーションフレームワークの責務ではないが、
+通常のWebアプリケーションはデータベースアクセスを行う。
+（大げさに言えば、WebアプリとはDBの皮である）
+
+具体的には、
+- 入力された値を条件として検索を行う
+- 入力された値で登録・更新を行う
+といった処理を行う。
+
+
+*** レンダリング
+
+処理結果をブラウザに表示するために、HTMLを生成する。

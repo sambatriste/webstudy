@@ -61,6 +61,11 @@ http://localhost:7373/hello
 mvn flyway:migrate
 #+END_SRC
 
+単体テスト用のデータベースを設定する場合、プロファイル(unit-test)を指定する。
+#+BEGIN_SRC sh
+mvn -P unit-test flyway:migrate
+#+END_SRC
+
 元に戻すには、以下のコマンドを実行する。
 
 #+BEGIN_SRC sh
