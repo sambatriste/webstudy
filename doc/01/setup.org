@@ -63,7 +63,7 @@ mvn flyway:migrate
 
 単体テスト用のデータベースを設定する場合、プロファイル(unit-test)を指定する。
 #+BEGIN_SRC sh
-mvn -P unit-test flyway:migrate
+mvn -P ut-db flyway:migrate
 #+END_SRC
 
 元に戻すには、以下のコマンドを実行する。
@@ -81,6 +81,13 @@ mvn flyway:clean
 #+BEGIN_SRC sh
 mvn exec:java
 #+END_SRC
+
+（たぶん使う必要はないが）単体テスト用のデータベースを参照するには、以下のコマンドを実行する。
+
+#+BEGIN_SRC sh
+mvn -P ut-db exec:java
+#+END_SRC
+
 
 ** データベースアクセス
 
@@ -128,4 +135,5 @@ Project Structureを開く。
 
 IntelliJ用プラグインをインストールする。
 
-https://github.com/siosio/DomaSupport/releases
+- https://github.com/siosio/DomaSupport/releases
+  - https://github.com/siosio/DomaSupport/releases/download/0.10/DomaSupport-IC.jar

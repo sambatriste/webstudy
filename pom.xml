@@ -14,8 +14,8 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <!-- データベース設定 -->
-    <db.main.url>jdbc:h2:file:./h2/webstudy-main</db.main.url>
-    <db.test.url>jdbc:h2:file:./h2/webstudy-test</db.test.url>
+    <db.main.url>jdbc:h2:file:${project.basedir}/h2/webstudy-main</db.main.url>
+    <db.test.url>jdbc:h2:file:${project.basedir}/h2/webstudy-test</db.test.url>
     <db.url>${db.main.url}</db.url>
     <db.user>sa</db.user>
     <db.password>sa</db.password>
@@ -24,7 +24,7 @@
 
   <profiles>
     <profile>
-      <id>unit-test</id>
+      <id>ut-db</id>
       <properties>
         <db.url>${db.test.url}</db.url>
       </properties>
