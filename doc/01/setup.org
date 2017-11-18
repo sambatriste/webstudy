@@ -1,26 +1,33 @@
-#+TITLE: セットアップ
+* セットアップ
 
-* ソフトウェアのインストール
+** ソフトウェアのインストール
 
-** JDK
+*** JDK
 
 - Oracle JDK8
 
-** IDE
+*** IDE
 
 - IntelliJ Community2017
 が、任意のIDEを使用してよい（ただし質問は受け付けない）。
 
-** ビルドツール
+*** ビルドツール
 
 - Maven 3.3.9(or later)
 
 IntelliJを使用する場合、上記バージョンが組み込まれている。
 
+*** SCM
 
-** SCM
+**** GitHub
 
-- Git
+- GitHubのアカウントを作成すること。
+- Collaboratorに登録するので、アカウント名を連絡すること。
+  - (forkは使わないことにした)
+
+**** Git
+
+プロキシ経由で使用する場合は以下の設定を行う。
 
 [[https://qiita.com/sambatriste/items/98f79cad3de9782f65b6][プロキシ内/外両方のGitリポジトリにアクセスする設定]]
 
@@ -28,21 +35,11 @@ IntelliJを使用する場合、上記バージョンが組み込まれている
 
 ** Git
 
-*** とりあえずお試し
-
 #+BEGIN_SRC sh
 git clone https://github.com/sambatriste/webstudy.git
 #+END_SRC
 
-*** 宿題をやるとき
-
-https://github.com/sambatriste/webstudy
-をforkして、Pull Requestを作成する。
-
-そのPull Requestをみてレビューをする。
-
-
-* Webアプリケーションの起動
+** Webアプリケーションの起動
 以下のコマンドでアプリケーションサーバ(Jetty)がポート7373で起動する。
 
 #+BEGIN_SRC sh
@@ -51,7 +48,6 @@ mvn jetty:run
 
 http://localhost:7373/hello
 にアクセスする。
-
 
 ** DBマイグレーション
 
@@ -88,7 +84,6 @@ mvn exec:java
 mvn -P ut-db exec:java
 #+END_SRC
 
-
 ** データベースアクセス
 
 データベースアクセスフレームワークには[[https://doma.readthedocs.io/][Doma2]]を使用する。
@@ -98,7 +93,6 @@ mvn -P ut-db exec:java
 Doma2はアノテーションプロセッサを使用する。
 コンパイル実行時に、アノテーションが付与されたクラスに対して操作を行う。
 （インタフェースに対して、その実装クラスを自動生成する等）
-
 
 **** アノテーションプロセッサの確認
 
@@ -114,7 +108,6 @@ Preferencesを開く。
 - Enable annotation processingをオン
 - Obtain processors from project classpathを選択
 - Store generated source relative to で Module content root を選択
-
 
 **** 自動生成されたソースを有効にする
 
