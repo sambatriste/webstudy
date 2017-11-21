@@ -68,7 +68,7 @@ mvn -P ut-db flyway:migrate
 mvn flyway:clean
 #+END_SRC
 
-** データベース参照
+** データベース参照(H2 Console)
 
 データベースには[[http://www.h2database.com/][H2 Database]]を使用する。
 
@@ -83,6 +83,12 @@ mvn exec:java
 #+BEGIN_SRC sh
 mvn -P ut-db exec:java
 #+END_SRC
+
+ブラウザに画面がうまく表示されない場合、URLのIPアドレスをlocalhostに書き換えてみる。
+
+#+BEGIN_EXAMPLE
+http://172.30.22.96:62642/  --> http://localhost:62642/
+#+END_EXAMPLE
 
 ** データベースアクセス
 
