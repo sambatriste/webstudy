@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class MockMemberDao implements MemberDao {
+public class InMemoryMemberDao implements MemberDao {
 
 
     private static final Map<Integer, Member> members = new ConcurrentHashMap<>();

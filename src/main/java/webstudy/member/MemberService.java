@@ -9,7 +9,7 @@ class MemberService {
     private final MemberDao dao;
 
     MemberService() {
-        this(new MockMemberDao());
+        this(new InMemoryMemberDao());
     }
 
     MemberService(MemberDao dao) {
