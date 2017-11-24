@@ -16,6 +16,12 @@ import java.util.List;
 
 /**
  * メンバーサーブレット。
+ *
+ * サーブレットを外部クラス(outer class)ではなく、staticなネストクラス(nested class)としているのは、
+ * 小さいファイルの数が多くなることを防ぐためであり、それ以上の意味はない。
+ * サーブレットは一つのURLパターンに対して1クラス必要となるため、このような形式としている。
+ *
+ * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html">Nested Classes (The Java™ Tutorials > Learning the Java Language > Classes and Objects)</a>
  */
 public class MemberServlets {
 
@@ -77,7 +83,6 @@ public class MemberServlets {
             service.register(member);
             resp.sendRedirect("list");
         }
-
     }
 
     /** 検索 */
