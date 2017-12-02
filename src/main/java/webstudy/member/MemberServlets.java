@@ -2,8 +2,6 @@ package webstudy.member;
 
 
 import webstudy.entity.Member;
-import webstudy.util.SimpleBeanUtil;
-import webstudy.validation.ValidationExecutor;
 import webstudy.validation.ValidationResult;
 
 import javax.servlet.ServletException;
@@ -69,10 +67,10 @@ public class MemberServlets {
         protected void doPost(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
 
-            Member member = SimpleBeanUtil.create(req.getParameterMap(), Member.class);
-            ValidationResult<Member> result = ValidationExecutor.validate(member);
+            MemberInputForm form = new MemberInputForm(req.getParameterMap());
+            ValidationResult<MemberInputForm> result = form.validate();
             if (result.isError()) {
-                req.setAttribute("member", member);
+                req.setAttribute("member", form);
                 req.setAttribute("errors", result);
                 req.getRequestDispatcher("/pages/member/memberInput.jsp")
                    .forward(req, resp);
@@ -80,7 +78,7 @@ public class MemberServlets {
             }
 
             MemberService service = new MemberService();
-            service.register(member);
+            service.register(form.toEntity());
             resp.sendRedirect("list");
         }
     }
@@ -92,13 +90,13 @@ public class MemberServlets {
         protected void doGet(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
 
-            MemberFindForm form = SimpleBeanUtil.create(req.getParameterMap(), MemberFindForm.class);
-            ValidationResult<MemberFindForm> result = ValidationExecutor.validate(form);
+            MemberFindForm form = new MemberFindForm(req.getParameterMap());
+            ValidationResult<MemberFindForm> result = form.validate();
             if (result.isError()) {
                 resp.sendError(400);  // リクエスト改ざん以外発生しない.
                 return;
             }
-            Member member = new MemberService().findById(form.getParsedMemberId());
+            Member member = new MemberService().findById(form.getMemberId());
             if (member == null) {
                 resp.sendError(404);
                 return;
@@ -116,13 +114,13 @@ public class MemberServlets {
         protected void doGet(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
 
-            MemberFindForm form = SimpleBeanUtil.create(req.getParameterMap(), MemberFindForm.class);
-            ValidationResult<MemberFindForm> result = ValidationExecutor.validate(form);
+            MemberFindForm form = new MemberFindForm(req.getParameterMap());
+            ValidationResult<MemberFindForm> result = form.validate();
             if (result.isError()) {
                 resp.sendError(400);  // リクエスト改ざん以外発生しない.
                 return;
             }
-            Member member = new MemberService().findById(form.getParsedMemberId());
+            Member member = new MemberService().findById(form.getMemberId());
             if (member == null) {
                 resp.sendError(404);
                 return;
@@ -139,18 +137,16 @@ public class MemberServlets {
         @Override
         protected void doPost(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
-
-            Member member = SimpleBeanUtil.create(req.getParameterMap(), Member.class);
-            ValidationResult<Member> result = ValidationExecutor.validate(member);
+            MemberUpdateForm form = new MemberUpdateForm(req.getParameterMap());
+            ValidationResult<MemberUpdateForm> result = form.validate();
             if (result.isError()) {
-                req.setAttribute("member", member);
+                req.setAttribute("member", form);
                 req.setAttribute("errors", result);
                 req.getRequestDispatcher("/pages/member/memberUpdate.jsp")
                    .forward(req, resp);
                 return;
             }
-
-            new MemberService().update(member);
+            new MemberService().update(form.toEntity());
             resp.sendRedirect("list");
         }
     }

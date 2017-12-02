@@ -1,23 +1,28 @@
-package webstudy.entity;
+package webstudy.member;
 
 import org.junit.Test;
-import webstudy.validation.ValidationExecutor;
 import webstudy.validation.ValidationResult;
 
-import java.util.Map;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
-public class MemberTest {
+public class MemberInputFormTest {
+    private MemberInputForm form = new MemberInputForm();
 
-    private Member member = new Member();
+    @Test
+    public void testValid() {
+        form.setFamilyName("山田");
+        form.setLastName("太郎");
+        ValidationResult<MemberInputForm> result = form.validate();
+        assertThat(result.isValid(), is(true));
+    }
 
     @Test
     public void testEmpty() {
-        ValidationResult<Member> result = ValidationExecutor.validate(member);
+        ValidationResult<MemberInputForm> result = form.validate();
         assertThat(result.isError(), is(true));
         {
             Set<String> familyNameResult = result.get("familyName");
@@ -35,14 +40,14 @@ public class MemberTest {
     @Test
     public void testOverSize() {
 
-        member.setFamilyName("1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890"
+        form.setFamilyName("1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890"
                                      + "1234567890" + "12345"
         );
-        member.setLastName("1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890"
-                                     + "1234567890" + "12345"
+        form.setLastName("1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890"
+                                   + "1234567890" + "12345"
         );
 
-        ValidationResult<Member> result = ValidationExecutor.validate(member);
+        ValidationResult<MemberInputForm> result = form.validate();
 
         assertThat(result.isError(), is(true));
         {

@@ -1,6 +1,5 @@
 package webstudy.validation;
 
-import javax.validation.ConstraintViolation;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.TreeMap;
@@ -18,17 +17,7 @@ import java.util.TreeMap;
  */
 public class ValidationResult<T> extends TreeMap<String, Set<String>> {
 
-    /**
-     * コンストラクタ.
-     *
-     * @param violations Bean Validationの結果
-     */
-    ValidationResult(Set<ConstraintViolation<T>> violations) {
-        for (ConstraintViolation<T> e : violations) {
-            String path = e.getPropertyPath().toString();
-            String msg = e.getMessage();
-            put(path, msg);
-        }
+    public ValidationResult() {
     }
 
     /**
@@ -59,7 +48,7 @@ public class ValidationResult<T> extends TreeMap<String, Set<String>> {
         return isEmpty();
     }
 
-    private void put(String path, String message) {
+    public void put(String path, String message) {
         Set<String> messages = computeIfAbsent(path, key -> new LinkedHashSet<>());
         messages.add(message);
     }
