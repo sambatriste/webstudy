@@ -7,9 +7,6 @@ import org.seasar.doma.Id;
 import org.seasar.doma.SequenceGenerator;
 import org.seasar.doma.Version;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
-
 /**
  * メンバー。
  */
@@ -21,12 +18,8 @@ public class Member {
     @SequenceGenerator(sequence = "MEMBER_SEQ")
     private Integer memberId;
 
-    @NotEmpty(message = "姓を入力してください。")
-    @Size(max = 64, message = "姓は1〜64文字で入力してください。")
     private String familyName;
 
-    @NotEmpty(message = "名を入力してください。")
-    @Size(max = 64, message = "名は1〜64文字で入力してください。")
     private String lastName;
 
     private Integer deptId;
