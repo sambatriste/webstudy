@@ -23,10 +23,10 @@ public class CalculateServlet extends HttpServlet {
         String x = req.getParameter("x");
         String y = req.getParameter("y");
 
-        int number_x = Integer.parseInt(x);
-        int number_y = Integer.parseInt(y);
+        int numberX = Integer.parseInt(x);
+        int numberY = Integer.parseInt(y);
 
-        int result = number_x + number_y;
+        int result = numberX + numberY;
 
         req.setAttribute("result",result);
         req.getRequestDispatcher("/pages/calculator/plus.jsp").forward(req, resp);
