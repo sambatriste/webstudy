@@ -45,26 +45,6 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- Bean Validation -->
-    <dependency>
-      <groupId>org.hibernate.validator</groupId>
-      <artifactId>hibernate-validator</artifactId>
-      <version>6.0.2.Final</version>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish</groupId>
-      <artifactId>javax.el</artifactId>
-      <version>3.0.1-b08</version>
-      <scope>runtime</scope>
-    </dependency>
-
-    <!-- Utilities (BeanUtil)-->
-    <dependency>
-      <groupId>org.jodd</groupId>
-      <artifactId>jodd-bean</artifactId>
-      <version>3.9</version>
-    </dependency>
-
     <!-- Database Access Framework -->
     <dependency>
       <groupId>org.seasar.doma</groupId>

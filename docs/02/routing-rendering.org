@@ -1,0 +1,63 @@
+* ルーティングとレンダリング
+
+** ルーティング
+
+*** Servlet3.0でのルーティング
+
+Servlet API3.0から導入された@WebServletを使用する。
+以下の例では、URL"/hello"へGETリクエストが送信された場合、HelloServlet#doGetが起動される。
+
+#+BEGIN_SRC java
+@WebServlet(urlPatterns = "/hello")
+public class HelloServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+    }
+#+END_SRC
+
+
+**** HTTPメソッドとServletのメソッドの対応関係
+
+HTTPメソッドに応じて、オーバーライドしたメソッドが呼び出される。
+
+| HTTPメソッド | Servletのメソッド | とりあえずの理解                                   |
+|--------------+-------------------+----------------------------------------------------|
+| GET          | doGet             | アドレスバーにURL入れたり<a>タグのリンクで飛んだ時 |
+| POST         | doPost            | <form method="post">の時                           |
+
+とりあえず、上の2つを覚えればよい。
+
+
+*** 【参考】Servlet3.0までのルーティング
+
+web.xmlにサーブレットを登録する。
+
+#+BEGIN_SRC xml
+
+<servlet>
+  <servlet-name>HelloServlet</servlet-name>
+  <servlet-class>webstudy.HelloServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+  <servlet-name>helloServlet</servlet-name>
+  <url-pattern>/hello</url-pattern>
+</servlet-mapping>
+
+#+END_SRC
+
+
+** レンダリング
+
+- 前準備(Servletでの処理)
+  - JSPでのレンダリング時必要な情報をリクエストスコープに設定する（JSPに引き継ぐため）
+  - JSPへフォワードする
+- サーブレットコンテナでの処理
+  - （初回のみ）JSPファイルからServletへの変換（Javaソース生成）
+  - （初回のみ）コンパイル(classファイル生成)
+  - クラスを実行
+- JSP
+  - リクエストスコープ、セッションスコープから値を取得する
+  - HTMLを生成する

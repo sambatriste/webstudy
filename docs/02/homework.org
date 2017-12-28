@@ -1,0 +1,15 @@
+* 課題1: パラメータを２つ受け取って足し算するServlet、JSPを作成せよ。
+
+http://localhost:7373/plus?x=2&y=3
+
+画面イメージ
+
+計算結果: 5
+
+計算はServletで行うこと
+
+
+* 課題2: JSPからServletへと変換されたJavaファイルを確認せよ。
+
+JSP初回起動時にtarget/tmp/jsp配下に出力される。
+
