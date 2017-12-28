@@ -31,7 +31,7 @@ public class MemberInputForm {
         } else if (familyName.length() > 64) {
             result.put("familyName", "姓は1〜64文字で入力してください。");
         }
-        if (lastName == null || familyName.isEmpty()) {
+        if (lastName == null || lastName.isEmpty()) {
             result.put("lastName", "名を入力してください。");
         } else if (lastName.length() > 64) {
             result.put("lastName", "名は1〜64文字で入力してください。");
