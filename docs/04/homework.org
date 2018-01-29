@@ -1,0 +1,15 @@
+* 宿題
+
+** その1
+
+InMemoryMemberDaoをやめて、Domaが生成するMemberDaoImplが使われるようにする。
+
+** その2
+
+webstudy.db.TransactionFilterをやめて、Serviceクラスの各メソッドで
+トランザクション制御を行うようにする。
+
+*** その2おまけ
+
+webstudy.db.TransactionFilterを使う場合とServiceでトランザクション制御した場合とで、
+それぞれどんな良い点、悪い点があるかを考えてみる。
