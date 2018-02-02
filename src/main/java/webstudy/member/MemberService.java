@@ -6,13 +6,13 @@ import java.util.List;
 
 class MemberService {
 
-    private final MemberDao dao;
+    private final MemberDaoImpl dao;
 
     MemberService() {
-        this(new InMemoryMemberDao());
+        this(new MemberDaoImpl());
     }
 
-    MemberService(MemberDao dao) {
+    MemberService(MemberDaoImpl dao) {
         this.dao = dao;
     }
 
