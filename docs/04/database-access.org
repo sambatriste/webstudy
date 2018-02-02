@@ -1,0 +1,51 @@
+* データベース
+
+** DBマイグレーション
+
+Flyway
+
+https://flywaydb.org/
+
+#+BEGIN_QUOTE
+Version control for your database.
+Robust schema evolution across all your environments.
+With ease, pleasure and plain SQL. 
+#+END_QUOTE
+
+
+** データベースアクセス
+
+Doma2
+
+*** アノテーションプロセッサ
+
+注釈処理を使用してコンパイル時 にコードの生成やコードの検証を行う。
+https://doma.readthedocs.io/ja/stable/annotation-processing/
+
+インタフェースを定義しDomaのアノテーションを付与すると、
+実装クラスのソースコードが生成される。
+
+**** 自動生成について
+
+「自動生成」というとダサい風潮があるが「自動生成」そのものが悪ではない。
+例えば、コンパイラはソースコードから実行ファイルや中間ファイルを「自動生成」する。
+JSPファイルはサーブレットのJavaファイルに変換されて最後はclassファイルになる。
+
+問題は、
+- 生成する元ネタが作りにくかったり（設計書の書き方にコツがいる）
+- 元ネタがないと成立しない（設計書をかかないとコーディングできない）
+- 生成したコードに修正ができない
+というところにある。
+
+
+*** 2way-SQL
+
+https://doma.readthedocs.io/ja/stable/sql/
+
+
+
+*** トランザクション
+
+トランザクション内部での処理をラムダ式で書く。
+
+https://doma.readthedocs.io/ja/stable/transaction/
