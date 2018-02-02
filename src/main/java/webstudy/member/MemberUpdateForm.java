@@ -15,6 +15,7 @@ public class MemberUpdateForm {
     private String memberId;
     private String familyName;
     private String lastName;
+    private String version;
 
     MemberUpdateForm() {
     }
@@ -23,6 +24,7 @@ public class MemberUpdateForm {
         memberId = getFirst(params, "memberId");
         familyName = getFirst(params, "familyName");
         lastName = getFirst(params, "lastName");
+        version = getFirst(params, "version");
     }
 
     ValidationResult<MemberUpdateForm> validate() {
@@ -84,6 +86,7 @@ public class MemberUpdateForm {
         member.setMemberId(Integer.parseInt(memberId));
         member.setFamilyName(familyName);
         member.setLastName(lastName);
+        member.setVersion(Integer.parseInt(version));
         return member;
     }
 }

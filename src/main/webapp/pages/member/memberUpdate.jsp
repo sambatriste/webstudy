@@ -35,7 +35,7 @@
           <span><c:out value="${msg}"/></span>
         </c:forEach>
       </div>
-
+      <input type="hidden" id="version" name="version" value="${member.version}"/>
       <div class="form-group">
         <input type="submit" value="更新">
       </div>
