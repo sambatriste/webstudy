@@ -1,5 +1,7 @@
 package webstudy.member;
 
+import org.seasar.doma.jdbc.tx.TransactionManager;
+import webstudy.db.AppConfig;
 import webstudy.entity.Member;
 
 import java.util.List;
@@ -7,6 +9,9 @@ import java.util.List;
 class MemberService {
 
     private final MemberDaoImpl dao;
+    //AppConfig AppConfig = new AppConfig();
+    TransactionManager tm = AppConfig.singleton().getTransactionManager();
+
 
     MemberService() {
         this(new MemberDaoImpl());
@@ -17,12 +22,19 @@ class MemberService {
     }
 
     List<Member> getAllMembers() {
-        return dao.selectAll();
+        return tm.required(() -> {
+            dao.selectAll();
+            tm.run;
+        });
     }
 
     void register(Member member) {
-        dao.insert(member);
+        tm.required(() -> {
+            dao.insert(member);
+            tm.run;
+        });
     }
+
 
     Member findById(Integer memberId) {
         return dao.selectById(memberId);

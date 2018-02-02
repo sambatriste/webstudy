@@ -13,3 +13,6 @@ webstudy.db.TransactionFilterをやめて、Serviceクラスの各メソッド�
 
 webstudy.db.TransactionFilterを使う場合とServiceでトランザクション制御した場合とで、
 それぞれどんな良い点、悪い点があるかを考えてみる。
+
+ロールバックする範囲を決めたり、エクセプション投げたりを
+任意に決めることができる。
