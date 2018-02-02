@@ -9,7 +9,7 @@ class MemberService {
     private final MemberDao dao;
 
     MemberService() {
-        this(new InMemoryMemberDao());
+        this(new MemberDaoImpl());
     }
 
     MemberService(MemberDao dao) {
