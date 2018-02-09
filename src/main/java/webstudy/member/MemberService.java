@@ -11,7 +11,7 @@ class MemberService {
     TransactionManager tm = AppConfig.singleton().getTransactionManager();
 
     MemberService() {
-        this( new MemberDaoImpl());
+        this(new InMemoryMemberDao());
     }
 
     MemberService(MemberDao dao) {

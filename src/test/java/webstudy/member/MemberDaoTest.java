@@ -1,6 +1,7 @@
 package webstudy.member;
 
 
+import org.junit.Ignore;
 import webstudy.db.TestAppConfig;
 import webstudy.db.TestTransaction;
 import webstudy.entity.Member;
@@ -39,6 +40,7 @@ public class MemberDaoTest {
         assertThat(memberList.size(), is(2));
     }
 
+    @Ignore
     @Test
     public void testJoin() {
         List<MemberDept> memberDeptList = tran.execute(() -> {
@@ -85,7 +87,6 @@ public class MemberDaoTest {
         Member newMember = new Member();
         newMember.setFamilyName("鈴木");
         newMember.setLastName("三郎");
-        newMember.setDeptId(1);
 
         tran.execute(() -> dao.insert(newMember));
         assertThat(newMember.getMemberId(), is(notNullValue()));
