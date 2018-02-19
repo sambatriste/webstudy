@@ -32,7 +32,7 @@
                value="${member.lastName}">
         <tags:error value="${requestScope.errors['lastName']}"/>
       </div>
-
+      <input type="hidden" id="version" name="version" value="${member.version}"/>
       <div class="form-group">
         <input type="submit" value="更新">
       </div>

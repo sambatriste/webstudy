@@ -59,6 +59,7 @@ public class MemberInputForm {
         Member member = new Member();
         member.setFamilyName(familyName);
         member.setLastName(lastName);
+        member.setVersion(0);
         return member;
     }
 }
