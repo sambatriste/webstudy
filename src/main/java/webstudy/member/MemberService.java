@@ -8,8 +8,7 @@ import java.util.List;
 
 class MemberService {
 
-    private final MemberDaoImpl dao;
-    //AppConfig AppConfig = new AppConfig();
+    private final MemberDao dao;
     TransactionManager tm = AppConfig.singleton().getTransactionManager();
 
 
@@ -22,17 +21,11 @@ class MemberService {
     }
 
     List<Member> getAllMembers() {
-        return tm.required(() -> {
-            dao.selectAll();
-            tm.run;
-        });
+            return dao.selectAll();
     }
 
     void register(Member member) {
-        tm.required(() -> {
             dao.insert(member);
-            tm.run;
-        });
     }
 
 
