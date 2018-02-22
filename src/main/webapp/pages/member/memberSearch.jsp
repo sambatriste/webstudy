@@ -13,6 +13,7 @@
           <th>ID</th>
           <th>姓</th>
           <th>名</th>
+          <th>部署</th>
         </tr>
       </thead>
       <tbody>
@@ -20,8 +21,13 @@
           <td>${member.memberId}</td>
           <td>${member.familyName}</td>
           <td>${member.lastName}</td>
+          <td>${member.deptName}</td>
         </tr>
       </tbody>
     </table>
+    <div>
+      <a href="delete?memberId=${member.memberId}">削除</a>
+      <a href='/member/list'>戻る</a>
+    </div>
   </body>
 </html>

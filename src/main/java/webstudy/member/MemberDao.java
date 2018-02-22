@@ -40,6 +40,14 @@ public interface MemberDao {
     List<MemberDept> selectMemberDeptAll();
 
     /**
+     * IDを指定してメンバーと部署を結合した結果{@link MemberDept}を取得する。
+     * @param  id メンバーID
+     * @return {@link MemberDept}
+     */
+    @Select
+    MemberDept selectMemberDeptById(Integer id);
+
+    /**
      * 登録する。
      * @param member メンバー
      * @return 件数

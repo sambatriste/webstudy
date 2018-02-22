@@ -44,6 +44,11 @@ public class InMemoryMemberDao implements MemberDao {
     }
 
     @Override
+    public MemberDept selectMemberDeptById(Integer id) {
+        throw new UnsupportedOperationException("not implemented.");
+    }
+
+    @Override
     public int insert(Member member) {
         add(member);
         return 1;

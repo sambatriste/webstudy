@@ -2,6 +2,7 @@ package webstudy.member;
 
 
 import webstudy.entity.Member;
+import webstudy.entity.MemberDept;
 import webstudy.validation.ValidationResult;
 
 import javax.servlet.ServletException;
@@ -96,14 +97,14 @@ public class MemberServlets {
                 resp.sendError(400);  // リクエスト改ざん以外発生しない.
                 return;
             }
-            Member member = new MemberService().findById(form.getMemberId());
+            MemberDept member = new MemberService().getUserInfo(form.getMemberId());
             if (member == null) {
                 resp.sendError(404);
                 return;
             }
             req.setAttribute("member", member);
             req.getRequestDispatcher("/pages/member/memberSearch.jsp")
-               .forward(req, resp);
+                    .forward(req, resp);
         }
     }
 
@@ -151,4 +152,30 @@ public class MemberServlets {
         }
     }
 
+    /** 削除 */
+    @WebServlet(urlPatterns = "/member/delete")
+    public static class MemberDelete extends HttpServlet {
+        @Override
+        protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
+
+            MemberFindForm form = new MemberFindForm(req.getParameterMap());
+            ValidationResult<MemberFindForm> result = form.validate();
+            if (result.isError()) {
+                resp.sendError(400);  // リクエスト改ざん以外発生しない.
+                return;
+            }
+
+            MemberService memberService = new MemberService();
+            Member member = memberService.findById(form.getMemberId());
+            if (member == null) {
+                resp.sendError(404);
+                return;
+            }
+
+            memberService.delete(member);
+            req.getRequestDispatcher("/pages/member/complete.jsp")
+                    .forward(req, resp);
+        }
+    }
 }
