@@ -1,6 +1,7 @@
 package webstudy.member;
 
 import webstudy.db.AppConfig;
+import webstudy.entity.Dept;
 import webstudy.entity.Member;
 import webstudy.entity.MemberDept;
 import org.seasar.doma.Dao;
@@ -8,6 +9,7 @@ import org.seasar.doma.Delete;
 import org.seasar.doma.Insert;
 import org.seasar.doma.Select;
 import org.seasar.doma.Update;
+
 
 import java.util.List;
 
@@ -25,12 +27,20 @@ public interface MemberDao {
     List<Member> selectAll();
 
     /**
-     * IDを指定して{@link Member}を取得する。
+     * IDを指定して{@link MemberDept}を取得する。
      * @param id メンバーID
-     * @return {@link Member}
+     * @return {@link MemberDept}
      */
     @Select
-    Member selectById(Integer id);
+    MemberDept selectById(Integer id);
+
+    /**
+     * IDを指定して{@link Dept}を取得する。
+     * @param id 部署ID
+     * @return {@link Dept}
+     */
+    @Select
+    Dept selectByDeptId(Integer id);
 
     /**
      * メンバーと部署を結合して取得する。
@@ -38,6 +48,13 @@ public interface MemberDao {
      */
     @Select
     List<MemberDept> selectMemberDeptAll();
+
+    /**
+     * 全件取得する
+     * @return {@link} 部署全件
+     */
+    @Select
+    List<Dept> selectDeptAll();
 
     /**
      * 登録する。
@@ -61,6 +78,6 @@ public interface MemberDao {
      * @return 件数
      */
     @Delete
-    int delete(Member member);
+    int delete(MemberDept member);
 
 }

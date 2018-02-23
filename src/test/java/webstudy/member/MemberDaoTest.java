@@ -22,7 +22,7 @@ public class MemberDaoTest {
 
     @Test
     public void testSelectById() {
-        Member member = tran.execute(() -> {
+        MemberDept member = tran.execute(() -> {
             return dao.selectById(1);
         });
         assertThat(member, is(notNullValue()));
@@ -71,13 +71,19 @@ public class MemberDaoTest {
     @Test
     public void testUpdate() {
         tran.execute(() -> {
-            Member member = dao.selectById(1);
-            assertThat(member.getFamilyName(), is("山田"));
+            MemberDept memberDept = dao.selectById(1);
+            assertThat(memberDept.getFamilyName(), is("山田"));
 
-            member.setFamilyName("田中");
+            memberDept.setFamilyName("田中");
+            Member member = new Member();
+            member.setMemberId(memberDept.getMemberId());
+            member.setFamilyName(memberDept.getFamilyName());
+            member.setLastName(memberDept.getLastName());
+            member.setDeptId(memberDept.getDeptId());
+            member.setVersion(memberDept.getVersion());
             dao.update(member);
 
-            Member updated = dao.selectById(1);
+            MemberDept updated = dao.selectById(1);
             assertThat(updated.getFamilyName(), is("田中"));
         });
     }
@@ -95,7 +101,7 @@ public class MemberDaoTest {
     @Test
     public void testDelete() {
         tran.execute(() -> {
-            Member member = dao.selectById(1);
+            MemberDept member = dao.selectById(1);
             dao.delete(member);
             assertThat(dao.selectAll().size(), is(1));
         });

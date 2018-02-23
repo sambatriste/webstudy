@@ -1,6 +1,7 @@
 package webstudy.member;
 
 import webstudy.entity.Member;
+import webstudy.entity.MemberDept;
 import webstudy.validation.ValidationResult;
 
 import java.util.Map;
@@ -16,12 +17,18 @@ public class MemberInputForm {
 
     private String lastName;
 
+    private String deptId;
+
+    private String deptName;
+
     MemberInputForm() {
     }
 
     MemberInputForm(Map<String, String[]> params) {
         familyName = getFirst(params, "familyName");
         lastName = getFirst(params, "lastName");
+        deptId = getFirst(params, "deptId");
+        deptName = getFirst(params, "deptName");
     }
 
     ValidationResult<MemberInputForm> validate() {
@@ -55,11 +62,29 @@ public class MemberInputForm {
         this.lastName = lastName;
     }
 
+    public Integer getDeptId() {
+        return Integer.parseInt(deptId);
+    }
+
+    public void setDeptId(Integer deptId) {
+        this.deptId = deptId.toString();
+    }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
     Member toEntity() {
         Member member = new Member();
         member.setFamilyName(familyName);
         member.setLastName(lastName);
+        member.setDeptId(Integer.parseInt(deptId));
         member.setVersion(0);
         return member;
     }
+
 }

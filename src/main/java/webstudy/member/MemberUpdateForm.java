@@ -1,6 +1,7 @@
 package webstudy.member;
 
 import webstudy.entity.Member;
+import webstudy.entity.MemberDept;
 import webstudy.validation.ValidationResult;
 
 import java.util.Map;
@@ -15,6 +16,7 @@ public class MemberUpdateForm {
     private String memberId;
     private String familyName;
     private String lastName;
+    private String deptId;
     private String version;
 
     MemberUpdateForm() {
@@ -24,6 +26,7 @@ public class MemberUpdateForm {
         memberId = getFirst(params, "memberId");
         familyName = getFirst(params, "familyName");
         lastName = getFirst(params, "lastName");
+        deptId = getFirst(params, "deptId");
         version = getFirst(params, "version");
     }
 
@@ -72,6 +75,14 @@ public class MemberUpdateForm {
         this.lastName = lastName;
     }
 
+    public Integer getDeptId() {
+        return Integer.parseInt(deptId);
+    }
+
+    public void setDeptId(Integer deptId) {
+        this.deptId = deptId.toString();
+    }
+
     private boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
@@ -86,6 +97,7 @@ public class MemberUpdateForm {
         member.setMemberId(Integer.parseInt(memberId));
         member.setFamilyName(familyName);
         member.setLastName(lastName);
+        member.setDeptId(Integer.parseInt(deptId));
         member.setVersion(Integer.parseInt(version));
         return member;
     }

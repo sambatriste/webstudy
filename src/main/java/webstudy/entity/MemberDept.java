@@ -18,6 +18,8 @@ public class MemberDept {
 
     private String deptName;
 
+    private Integer version;
+
     public Integer getMemberId() {
         return memberId;
     }
@@ -56,5 +58,13 @@ public class MemberDept {
 
     public void setDeptName(String deptName) {
         this.deptName = deptName;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 }

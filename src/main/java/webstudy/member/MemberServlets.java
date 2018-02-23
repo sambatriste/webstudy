@@ -1,7 +1,9 @@
 package webstudy.member;
 
 
+import webstudy.entity.Dept;
 import webstudy.entity.Member;
+import webstudy.entity.MemberDept;
 import webstudy.validation.ValidationResult;
 
 import javax.servlet.ServletException;
@@ -41,7 +43,7 @@ public class MemberServlets {
                 throws ServletException, IOException {
 
             MemberService service = new MemberService();
-            List<Member> allMembers = service.getAllMembers();
+            List<MemberDept> allMembers = service.getAllMembersWithDept();
             req.setAttribute("memberList", allMembers);
             req.getRequestDispatcher("/pages/member/memberList.jsp")
                .forward(req, resp);
@@ -54,7 +56,9 @@ public class MemberServlets {
         @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
-
+            MemberService service = new MemberService();
+            List<Dept> allDepts = service.getAllDepts();
+            req.setAttribute("depts",allDepts);
             req.getRequestDispatcher("/pages/member/memberInput.jsp")
                .forward(req, resp);
         }
@@ -69,6 +73,7 @@ public class MemberServlets {
 
             MemberInputForm form = new MemberInputForm(req.getParameterMap());
             ValidationResult<MemberInputForm> result = form.validate();
+
             if (result.isError()) {
                 req.setAttribute("member", form);
                 req.setAttribute("errors", result);
@@ -76,7 +81,6 @@ public class MemberServlets {
                    .forward(req, resp);
                 return;
             }
-
             MemberService service = new MemberService();
             service.register(form.toEntity());
             resp.sendRedirect("list");
@@ -96,7 +100,7 @@ public class MemberServlets {
                 resp.sendError(400);  // リクエスト改ざん以外発生しない.
                 return;
             }
-            Member member = new MemberService().findById(form.getMemberId());
+            MemberDept member = new MemberService().findById(form.getMemberId());
             if (member == null) {
                 resp.sendError(404);
                 return;
@@ -120,11 +124,14 @@ public class MemberServlets {
                 resp.sendError(400);  // リクエスト改ざん以外発生しない.
                 return;
             }
-            Member member = new MemberService().findById(form.getMemberId());
+            MemberDept member = new MemberService().findById(form.getMemberId());
             if (member == null) {
                 resp.sendError(404);
                 return;
             }
+            MemberService service = new MemberService();
+            List<Dept> allDepts = service.getAllDepts();
+            req.setAttribute("depts",allDepts);
             req.setAttribute("member", member);
             req.getRequestDispatcher("/pages/member/memberUpdate.jsp")
                .forward(req, resp);

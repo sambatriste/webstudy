@@ -22,6 +22,8 @@ public class Member {
 
     private String lastName;
 
+    private Integer deptId;
+
     @Version
     private Integer version;
 
@@ -37,6 +39,10 @@ public class Member {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public Integer getDeptId() {
+        return deptId;
     }
 
 
@@ -55,6 +61,8 @@ public class Member {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public void setDeptId(Integer deptId) {this.deptId = deptId; }
 
     public void setVersion(Integer version) {
         this.version = version;
