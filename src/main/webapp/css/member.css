@@ -1,0 +1,15 @@
+table, th, td {
+  border-collapse: collapse;
+  line-height: 2;
+}
+
+table.member th {
+  background-color:#191970;
+  color:#ffffff;
+  text-align: center;
+}
+
+table.member  tr:nth-child(even) {
+  background: #F0FFFF;
+  padding: 10px 20px;
+}
