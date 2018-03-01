@@ -2,6 +2,7 @@ package webstudy.member;
 
 
 import webstudy.entity.Member;
+import webstudy.entity.MemberDept;
 import webstudy.validation.ValidationResult;
 
 import javax.servlet.ServletException;
@@ -41,7 +42,7 @@ public class MemberServlets {
                 throws ServletException, IOException {
 
             MemberService service = new MemberService();
-            List<Member> allMembers = service.getAllMembers();
+            List<MemberDept> allMembers = service.getAllMembers();
             req.setAttribute("memberList", allMembers);
             req.getRequestDispatcher("/pages/member/memberList.jsp")
                .forward(req, resp);

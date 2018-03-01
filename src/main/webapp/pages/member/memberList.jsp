@@ -14,6 +14,7 @@
           <th>ID</th>
           <th>性</th>
           <th>名</th>
+          <th>部署</th>
           <th>操作</th>
         </tr>
       </thead>
@@ -23,6 +24,7 @@
             <td>${row.memberId}</td>
             <td>${row.familyName}</td>
             <td>${row.lastName}</td>
+            <td>${row.deptName}</td>
             <td>
               <a href="search?memberId=${row.memberId}">参照</a>
               <a href="inputForUpdate?memberId=${row.memberId}">更新</a>

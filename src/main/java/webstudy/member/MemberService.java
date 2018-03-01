@@ -3,6 +3,7 @@ package webstudy.member;
 import org.seasar.doma.jdbc.tx.TransactionManager;
 import webstudy.db.AppConfig;
 import webstudy.entity.Member;
+import webstudy.entity.MemberDept;
 
 import java.util.List;
 
@@ -18,10 +19,10 @@ class MemberService {
         this.dao = dao;
     }
 
-    List<Member> getAllMembers() {
+    List<MemberDept> getAllMembers() {
         TransactionManager tm = AppConfig.singleton().getTransactionManager();
         return tm.required(() -> {
-            return dao.selectAll();
+            return dao.selectMemberDeptAll();
         });
     }
 
