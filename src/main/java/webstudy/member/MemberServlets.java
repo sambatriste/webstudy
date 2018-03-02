@@ -127,11 +127,13 @@ public class MemberServlets {
                 return;
             }
             Member member = new MemberService().findById(form.getMemberId());
+            List<Dept> allDept = new DeptService().getAllDept();
             if (member == null) {
                 resp.sendError(404);
                 return;
             }
             req.setAttribute("member", member);
+            req.setAttribute("allDept", allDept);
             req.getRequestDispatcher("/pages/member/memberUpdate.jsp")
                .forward(req, resp);
         }

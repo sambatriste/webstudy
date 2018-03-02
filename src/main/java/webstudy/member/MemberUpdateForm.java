@@ -15,6 +15,7 @@ public class MemberUpdateForm {
     private String memberId;
     private String familyName;
     private String lastName;
+    private String deptId;
     private String version;
 
     MemberUpdateForm() {
@@ -24,6 +25,7 @@ public class MemberUpdateForm {
         memberId = getFirst(params, "memberId");
         familyName = getFirst(params, "familyName");
         lastName = getFirst(params, "lastName");
+        deptId = getFirst(params,"deptId");
         version = getFirst(params, "version");
     }
 
@@ -44,6 +46,9 @@ public class MemberUpdateForm {
             result.put("lastName", "名を入力してください。");
         } else if (lastName.length() > 64) {
             result.put("lastName", "名は1〜64文字で入力してください。");
+        }
+        if (deptId == null || deptId.isEmpty()) {
+            result.put("deptId", "部署を選択してください");
         }
         return result;
     }
@@ -72,6 +77,14 @@ public class MemberUpdateForm {
         this.lastName = lastName;
     }
 
+    public String getDeptId(){
+        return deptId;
+    }
+
+    public void setDeptId(String deptId){
+        this.deptId= deptId;
+    }
+
     private boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
@@ -86,6 +99,7 @@ public class MemberUpdateForm {
         member.setMemberId(Integer.parseInt(memberId));
         member.setFamilyName(familyName);
         member.setLastName(lastName);
+        member.setDeptId(Integer.parseInt(deptId));
         member.setVersion(Integer.parseInt(version));
         return member;
     }

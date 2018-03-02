@@ -32,6 +32,21 @@
                value="${member.lastName}">
         <tags:error msg="${requestScope.errors['lastName']}" />
       </div>
+      <div class="form-group">
+        <label for="deptId">部署</label>
+        <select name="deptId" >
+          <c:forEach var="dept" items="${allDept}">
+            <c:choose>
+              <c:when test="${member.deptId == dept.deptId}">
+                <option value=${dept.deptId} selected><c:out value="${dept.deptId} : ${dept.deptName}"  /></option>
+              </c:when>
+              <c:otherwise>
+                <option value=${dept.deptId}><c:out value="${dept.deptId} : ${dept.deptName}" /></option>
+              </c:otherwise>
+            </c:choose>
+          </c:forEach>
+        </select>
+      </div>
       <input type="hidden" id="version" name="version" value="${member.version}"/>
       <div class="form-group">
         <input type="submit" value="更新">

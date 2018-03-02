@@ -4,6 +4,8 @@ import org.seasar.doma.jdbc.tx.TransactionManager;
 import webstudy.db.AppConfig;
 import webstudy.entity.Dept;
 
+import java.util.List;
+
 /**
  * Created by tie304275 on 2018/03/02.
  */
@@ -23,6 +25,14 @@ public class DeptService {
         TransactionManager tm = AppConfig.singleton().getTransactionManager();
         return  tm.required(() ->{
             return dao.selectById(deptId);
+                }
+        );
+    }
+
+    List<Dept> getAllDept(){
+        TransactionManager tm = AppConfig.singleton().getTransactionManager();
+        return tm.required(() ->{
+            return dao.selectAll();
                 }
         );
     }
