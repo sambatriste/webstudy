@@ -1,6 +1,7 @@
 package webstudy.member;
 
 
+import webstudy.entity.Dept;
 import webstudy.entity.Member;
 import webstudy.entity.MemberDept;
 import webstudy.validation.ValidationResult;
@@ -91,18 +92,22 @@ public class MemberServlets {
         protected void doGet(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
 
-            MemberFindForm form = new MemberFindForm(req.getParameterMap());
-            ValidationResult<MemberFindForm> result = form.validate();
+            MemberFindForm memberFindform = new MemberFindForm(req.getParameterMap());
+
+            ValidationResult<MemberFindForm> result = memberFindform.validate();
             if (result.isError()) {
                 resp.sendError(400);  // リクエスト改ざん以外発生しない.
                 return;
             }
-            Member member = new MemberService().findById(form.getMemberId());
+            Member member = new MemberService().findById(memberFindform.getMemberId());
+            Dept dept = new DeptService().findById(member.getDeptId());
+
             if (member == null) {
                 resp.sendError(404);
                 return;
             }
             req.setAttribute("member", member);
+            req.setAttribute("dept",dept);
             req.getRequestDispatcher("/pages/member/memberSearch.jsp")
                .forward(req, resp);
         }

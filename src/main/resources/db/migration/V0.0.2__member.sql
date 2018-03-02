@@ -4,7 +4,7 @@ create table member (
     member_id integer not null primary key,
     family_name varchar(64) not null,
     last_name varchar(64) not null,
-    dept_id integer not null,
+    dept_id integer,
     version integer not null
 );
 
