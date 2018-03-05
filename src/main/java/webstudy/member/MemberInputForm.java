@@ -41,7 +41,7 @@ public class MemberInputForm {
             result.put("lastName", "名は1〜64文字で入力してください。");
         }
         if (deptId == null || deptId.isEmpty()) {
-            result.put("deptId", "部署を選択してください");
+            result.put("deptId", "部署を選択してください。");
         }
         return result;
     }

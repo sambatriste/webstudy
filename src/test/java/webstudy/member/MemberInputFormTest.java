@@ -16,6 +16,7 @@ public class MemberInputFormTest {
     public void testValid() {
         form.setFamilyName("山田");
         form.setLastName("太郎");
+        form.setDeptId("1");
         ValidationResult<MemberInputForm> result = form.validate();
         assertThat(result.isValid(), is(true));
     }
@@ -34,7 +35,12 @@ public class MemberInputFormTest {
             assertThat(lastNameResult, hasItem("名を入力してください。"));
             assertThat(lastNameResult.size(), is(1));
         }
-        assertThat(result.size(), is(2));
+        {
+            Set<String> deptIdResult = result.get("deptId");
+            assertThat(deptIdResult, hasItem("部署を選択してください。"));
+            assertThat(deptIdResult.size(), is(1));
+        }
+        assertThat(result.size(), is(3));
     }
 
     @Test
@@ -46,6 +52,7 @@ public class MemberInputFormTest {
         form.setLastName("1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890"
                                    + "1234567890" + "12345"
         );
+        form.setDeptId("1");
 
         ValidationResult<MemberInputForm> result = form.validate();
 
