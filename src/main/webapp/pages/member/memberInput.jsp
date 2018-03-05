@@ -32,6 +32,14 @@
           <span><c:out value="${msg}"/></span>
         </c:forEach>
       </div>
+      <div class="form-group">
+        <label for="deptId">部署</label>
+        <select name="deptId" >
+          <c:forEach var="dept" items="${allDept}">
+            <option value=${dept.deptId}><c:out value="${dept.deptId} : ${dept.deptName}" /></option>
+          </c:forEach>
+        </select>
+      </div>
       <div>
         <input type="submit" value="登録">
       </div>

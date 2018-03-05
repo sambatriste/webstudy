@@ -57,6 +57,8 @@ public class MemberServlets {
         protected void doGet(HttpServletRequest req, HttpServletResponse resp)
                 throws ServletException, IOException {
 
+            List<Dept> allDept = new DeptService().getAllDept();
+            req.setAttribute("allDept", allDept);
             req.getRequestDispatcher("/pages/member/memberInput.jsp")
                .forward(req, resp);
         }
@@ -74,6 +76,9 @@ public class MemberServlets {
             if (result.isError()) {
                 req.setAttribute("member", form);
                 req.setAttribute("errors", result);
+
+                List<Dept> allDept = new DeptService().getAllDept();
+                req.setAttribute("allDept", allDept);
                 req.getRequestDispatcher("/pages/member/memberInput.jsp")
                    .forward(req, resp);
                 return;
@@ -127,11 +132,12 @@ public class MemberServlets {
                 return;
             }
             Member member = new MemberService().findById(form.getMemberId());
-            List<Dept> allDept = new DeptService().getAllDept();
             if (member == null) {
                 resp.sendError(404);
                 return;
             }
+            List<Dept> allDept = new DeptService().getAllDept();
+
             req.setAttribute("member", member);
             req.setAttribute("allDept", allDept);
             req.getRequestDispatcher("/pages/member/memberUpdate.jsp")
