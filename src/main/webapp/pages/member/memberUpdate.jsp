@@ -36,14 +36,8 @@
         <label for="deptId">部署</label>
         <select name="deptId" >
           <c:forEach var="dept" items="${allDept}">
-            <c:choose>
-              <c:when test="${member.deptId == dept.deptId}">
-                <option value=${dept.deptId} selected><c:out value="${dept.deptId} : ${dept.deptName}"  /></option>
-              </c:when>
-              <c:otherwise>
-                <option value=${dept.deptId}><c:out value="${dept.deptId} : ${dept.deptName}" /></option>
-              </c:otherwise>
-            </c:choose>
+            <c:set var="selected" value="${member.deptId == dept.deptId ? 'selected' : '' }"/>
+            <option value="${dept.deptId}" ${selected}><c:out value="${dept.deptId} : ${dept.deptName}"  /></option>
           </c:forEach>
         </select>
       </div>
