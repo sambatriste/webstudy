@@ -1,6 +1,7 @@
-package webstudy.member;
+package webstudy.member.servlet;
 
 import org.junit.Test;
+import webstudy.member.form.MemberInputForm;
 import webstudy.validation.ValidationResult;
 
 import java.util.Set;
@@ -9,27 +10,21 @@ import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
-public class MemberUpdateFormTest {
-    private MemberUpdateForm form = new MemberUpdateForm();
+public class MemberInputFormTest {
+    private MemberInputForm form = new MemberInputForm();
 
     @Test
     public void testValid() {
-        form.setMemberId("1");
         form.setFamilyName("山田");
         form.setLastName("太郎");
-        ValidationResult<MemberUpdateForm> result = form.validate();
+        ValidationResult<MemberInputForm> result = form.validate();
         assertThat(result.isValid(), is(true));
     }
 
     @Test
     public void testEmpty() {
-        ValidationResult<MemberUpdateForm> result = form.validate();
+        ValidationResult<MemberInputForm> result = form.validate();
         assertThat(result.isError(), is(true));
-        {
-            Set<String> memberIdResult = result.get("memberId");
-            assertThat(memberIdResult, hasItem("メンバーIDを入力してください。"));
-            assertThat(memberIdResult.size(), is(1));
-        }
         {
             Set<String> familyNameResult = result.get("familyName");
             assertThat(familyNameResult, hasItem("姓を入力してください。"));
@@ -40,20 +35,20 @@ public class MemberUpdateFormTest {
             assertThat(lastNameResult, hasItem("名を入力してください。"));
             assertThat(lastNameResult.size(), is(1));
         }
-        assertThat(result.size(), is(3));
+        assertThat(result.size(), is(2));
     }
 
     @Test
     public void testOverSize() {
-        form.setMemberId("1");  // valid
+
         form.setFamilyName("1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890"
-                                   + "1234567890" + "12345"
+                                     + "1234567890" + "12345"
         );
         form.setLastName("1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890"
-                                 + "1234567890" + "12345"
+                                   + "1234567890" + "12345"
         );
 
-        ValidationResult<MemberUpdateForm> result = form.validate();
+        ValidationResult<MemberInputForm> result = form.validate();
 
         assertThat(result.isError(), is(true));
         {

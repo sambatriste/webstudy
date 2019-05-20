@@ -1,4 +1,4 @@
-package webstudy.member;
+package webstudy.member.form;
 
 import webstudy.entity.Member;
 import webstudy.validation.ValidationResult;
@@ -16,15 +16,15 @@ public class MemberInputForm {
 
     private String lastName;
 
-    MemberInputForm() {
+    public MemberInputForm() {
     }
 
-    MemberInputForm(Map<String, String[]> params) {
+    public MemberInputForm(Map<String, String[]> params) {
         familyName = getFirst(params, "familyName");
         lastName = getFirst(params, "lastName");
     }
 
-    ValidationResult<MemberInputForm> validate() {
+    public ValidationResult<MemberInputForm> validate() {
         ValidationResult<MemberInputForm> result = new ValidationResult<>();
         if (familyName == null || familyName.isEmpty()) {
             result.put("familyName", "姓を入力してください。");
@@ -55,7 +55,7 @@ public class MemberInputForm {
         this.lastName = lastName;
     }
 
-    Member toEntity() {
+    public Member toEntity() {
         Member member = new Member();
         member.setFamilyName(familyName);
         member.setLastName(lastName);

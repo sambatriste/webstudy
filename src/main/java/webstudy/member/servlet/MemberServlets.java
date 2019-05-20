@@ -1,7 +1,11 @@
-package webstudy.member;
+package webstudy.member.servlet;
 
 
 import webstudy.entity.Member;
+import webstudy.member.serivce.MemberService;
+import webstudy.member.form.MemberFindForm;
+import webstudy.member.form.MemberInputForm;
+import webstudy.member.form.MemberUpdateForm;
 import webstudy.validation.ValidationResult;
 
 import javax.servlet.ServletException;

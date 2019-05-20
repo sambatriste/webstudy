@@ -1,12 +1,11 @@
-package webstudy.member;
-
+package webstudy.member.dao;
 
 import org.junit.Ignore;
+import org.junit.Test;
 import webstudy.db.TestAppConfig;
 import webstudy.db.TestTransaction;
 import webstudy.entity.Member;
 import webstudy.entity.MemberDept;
-import org.junit.Test;
 
 import java.util.List;
 

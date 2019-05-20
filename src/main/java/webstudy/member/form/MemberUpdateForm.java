@@ -1,4 +1,4 @@
-package webstudy.member;
+package webstudy.member.form;
 
 import webstudy.entity.Member;
 import webstudy.validation.ValidationResult;
@@ -17,17 +17,17 @@ public class MemberUpdateForm {
     private String lastName;
     private String version;
 
-    MemberUpdateForm() {
+    public MemberUpdateForm() {
     }
 
-    MemberUpdateForm(Map<String, String[]> params) {
+    public MemberUpdateForm(Map<String, String[]> params) {
         memberId = getFirst(params, "memberId");
         familyName = getFirst(params, "familyName");
         lastName = getFirst(params, "lastName");
         version = getFirst(params, "version");
     }
 
-    ValidationResult<MemberUpdateForm> validate() {
+    public ValidationResult<MemberUpdateForm> validate() {
         ValidationResult<MemberUpdateForm> result = new ValidationResult<>();
 
         if (memberId == null) {
@@ -89,7 +89,7 @@ public class MemberUpdateForm {
         }
     }
 
-    Member toEntity() {
+    public Member toEntity() {
         Member member = new Member();
         member.setMemberId(Integer.parseInt(memberId));
         member.setFamilyName(familyName);

@@ -1,4 +1,4 @@
-package webstudy.member;
+package webstudy.member.dao;
 
 import webstudy.db.AppConfig;
 import webstudy.entity.Member;

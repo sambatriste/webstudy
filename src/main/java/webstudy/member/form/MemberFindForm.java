@@ -1,4 +1,4 @@
-package webstudy.member;
+package webstudy.member.form;
 
 import webstudy.util.MapUtil;
 import webstudy.validation.ValidationResult;
@@ -8,12 +8,12 @@ import java.util.Map;
 /**
  * メンバー検索用フォーム。
  */
-class MemberFindForm {
+public class MemberFindForm {
 
-    MemberFindForm() {
+    public MemberFindForm() {
     }
 
-    MemberFindForm(Map<String, String[]> params) {
+    public MemberFindForm(Map<String, String[]> params) {
         memberId = MapUtil.getFirst(params, "memberId");
     }
 
@@ -23,15 +23,15 @@ class MemberFindForm {
      * {@link Integer}変換したメンバーIDを取得する。
      * @return メンバーID
      */
-    Integer getMemberId() {
+    public Integer getMemberId() {
         return Integer.parseInt(memberId);
     }
 
-    void setMemberId(String memberId) {
+    public void setMemberId(String memberId) {
         this.memberId = memberId;
     }
 
-    ValidationResult<MemberFindForm> validate() {
+    public ValidationResult<MemberFindForm> validate() {
         ValidationResult<MemberFindForm> result = new ValidationResult<>();
         if (memberId == null) {
             result.put("memberId", "メンバーIDを入力してください。");

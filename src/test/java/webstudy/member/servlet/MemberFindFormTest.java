@@ -1,7 +1,8 @@
-package webstudy.member;
+package webstudy.member.servlet;
 
 
 import org.junit.Test;
+import webstudy.member.form.MemberFindForm;
 import webstudy.validation.ValidationResult;
 
 import java.util.Set;
