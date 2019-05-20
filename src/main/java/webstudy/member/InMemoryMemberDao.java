@@ -21,10 +21,12 @@ public class InMemoryMemberDao implements MemberDao {
         Member yamada = new Member();
         yamada.setFamilyName("山田");
         yamada.setLastName("太郎");
+        yamada.setVersion(0);
         add(yamada);
         Member tanaka = new Member();
         tanaka.setFamilyName("田中");
         tanaka.setLastName("次郎");
+        tanaka.setVersion(0);
         add(tanaka);
     }
 
