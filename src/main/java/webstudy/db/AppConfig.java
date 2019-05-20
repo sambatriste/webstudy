@@ -9,7 +9,7 @@ import org.seasar.doma.SingletonConfig;
 public class AppConfig extends AppConfigBase {
 
     /** URL */
-    public static final String URL = "jdbc:h2:file:./h2/webstudy-main;AUTO_SERVER=true";
+    public static final String URL = "jdbc:h2:file:./h2/webstudy-main";
     /** ユーザ */
     public static final String USER = "sa";
     /** パスワード */
