@@ -7,6 +7,76 @@
 
   <display-name>Archetype Created Web Application</display-name>
 
+  <servlet>
+    <servlet-name>MemberIndex</servlet-name>
+    <servlet-class>webstudy.member.servlet.MemberIndex</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>MemberIndex</servlet-name>
+    <url-pattern>/member</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>MemberInputForRegister</servlet-name>
+    <servlet-class>webstudy.member.servlet.MemberInputForRegister</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>MemberInputForRegister</servlet-name>
+    <url-pattern>/member/inputForRegister</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>MemberInputForUpdate</servlet-name>
+    <servlet-class>webstudy.member.servlet.MemberInputForUpdate</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>MemberInputForUpdate</servlet-name>
+    <url-pattern>/member/inputForUpdate</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>MemberList</servlet-name>
+    <servlet-class>webstudy.member.servlet.MemberList</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>MemberList</servlet-name>
+    <url-pattern>/member/list</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>MemberRegister</servlet-name>
+    <servlet-class>webstudy.member.servlet.MemberRegister</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>MemberRegister</servlet-name>
+    <url-pattern>/member/register</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>MemberSearch</servlet-name>
+    <servlet-class>webstudy.member.servlet.MemberSearch</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>MemberSearch</servlet-name>
+    <url-pattern>/member/search</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>MemberUpdate</servlet-name>
+    <servlet-class>webstudy.member.servlet.MemberUpdate</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>MemberUpdate</servlet-name>
+    <url-pattern>/member/update</url-pattern>
+  </servlet-mapping>
+
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>JSP protected</web-resource-name>

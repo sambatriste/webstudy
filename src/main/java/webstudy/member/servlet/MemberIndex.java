@@ -8,8 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /** インデックス */
-@WebServlet(urlPatterns = {"/member", "member/index"})
-public class Index extends HttpServlet {
+public class MemberIndex extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/pages/member/index.jsp")

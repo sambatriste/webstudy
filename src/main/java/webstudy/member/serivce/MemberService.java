@@ -1,8 +1,9 @@
 package webstudy.member.serivce;
 
 import webstudy.entity.Member;
+import webstudy.member.dao.InMemoryMemberDao;
 import webstudy.member.dao.MemberDao;
-import webstudy.member.dao.MemberDaoImpl;
+
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class MemberService {
     private final MemberDao dao;
 
     public MemberService() {
-        this(new MemberDaoImpl());
+        this(new InMemoryMemberDao());
     }
 
     public MemberService(MemberDao dao) {

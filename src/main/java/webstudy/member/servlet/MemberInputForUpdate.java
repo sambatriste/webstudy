@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /** 変更 */
-@WebServlet(urlPatterns = "/member/inputForUpdate")
 public class MemberInputForUpdate extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /** 入力 */
-@WebServlet(urlPatterns = "/member/inputForRegister")
 public class MemberInputForRegister extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
