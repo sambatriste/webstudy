@@ -16,7 +16,6 @@ import java.io.IOException;
  *
  * @see TransactionManager
  */
-@WebFilter(urlPatterns = "*")
 public class TransactionFilter implements Filter {
 
     @Override
@@ -41,7 +40,11 @@ public class TransactionFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        // NOP
+        try {
+            Class.forName(AppConfig.DRIVER_CLASS_NAME);
+        } catch (ClassNotFoundException e) {
+            throw new ServletException(e);
+        }
     }
 
     @Override

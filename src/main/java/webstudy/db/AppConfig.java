@@ -15,6 +15,8 @@ public class AppConfig extends AppConfigBase {
     /** パスワード */
     public static final String PASSWORD = "sa";
 
+    public static final String DRIVER_CLASS_NAME = "org.h2.Driver";
+
     /** シングルトンインスタンス */
     private static final AppConfig CONFIG = new AppConfig();
 
