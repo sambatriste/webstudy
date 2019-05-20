@@ -72,6 +72,14 @@ public class MemberUpdateForm {
         this.lastName = lastName;
     }
 
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
     private boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
