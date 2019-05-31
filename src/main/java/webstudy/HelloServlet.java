@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 
-@WebServlet(urlPatterns = "/hello")
 public class HelloServlet extends HttpServlet {
 
     @Override
@@ -21,7 +20,7 @@ public class HelloServlet extends HttpServlet {
             sayHelloTo = "World";
         }
 
-        resp.setContentType("text/html");
+        resp.setContentType("text/html; charset=UTF-8");
         PrintWriter w = resp.getWriter();
         w.println("<!DOCTYPE html>");
         w.println("<html lang='ja'>");

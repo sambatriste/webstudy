@@ -8,6 +8,16 @@
   <display-name>Archetype Created Web Application</display-name>
 
   <servlet>
+    <servlet-name>Hello</servlet-name>
+    <servlet-class>webstudy.HelloServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>Hello</servlet-name>
+    <url-pattern>/hello</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>MemberIndex</servlet-name>
     <servlet-class>webstudy.member.servlet.MemberIndex</servlet-class>
   </servlet>
