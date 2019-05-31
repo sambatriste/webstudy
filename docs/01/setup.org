@@ -4,12 +4,18 @@
 
 *** JDK
 
-- Oracle JDK8
+- JDK8
+
+https://adoptopenjdk.net/
+
 
 *** IDE
 
-- IntelliJ Community2017
-が、任意のIDEを使用してよい（ただし質問は受け付けない）。
+- IntelliJ Community Edition
+
+が、任意のIDEを使用してよい（Eclipseなど）。
+
+https://www.jetbrains.com/idea/
 
 *** ビルドツール
 
