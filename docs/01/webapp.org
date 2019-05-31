@@ -145,3 +145,8 @@ public class HelloServlet extends HttpServlet {
 *** レンダリング
 
 処理結果をブラウザに表示するために、HTMLを生成する。
+
+* 参考図書
+
+Real World HTTP ミニ版
+https://www.oreilly.co.jp/books/9784873118789/
