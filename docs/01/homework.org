@@ -1,0 +1,15 @@
+* 課題1: HelloServlet
+
+webstudy.HelloServerを動かして、サーバ側でどのようなリクエストを受信しているか調べよう。
+
+
+* 課題2: HelloServletを開発者ツールで見てみよう
+
+開発者ツールを使って、サーバにアクセス時にどのようなリクエストを送信し、どのようなレスポンスを受信しているか見てみよう。
+http://localhost:7373/hello
+
+
+* 課題3: HelloServletと同じものをJSPで作ってみよう
+
+http://localhost:7373/hello.jsp
+
