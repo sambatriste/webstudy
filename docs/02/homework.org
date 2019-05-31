@@ -1,12 +1,54 @@
 * 課題1: パラメータを２つ受け取って足し算するServlet、JSPを作成せよ。
 
+画面イメージ(2+3の場合)
+#+BEGIN_EXAMPLE
+計算結果: 5
+#+END_EXAMPLE
+
+計算はServletで行うこと。
+
+** 課題1-1: GETリクエスト
+
 http://localhost:7373/plus?x=2&y=3
 
-画面イメージ
+GETリクエストのクエリ文字列で送信された値を足し算する。
 
-計算結果: 5
+*** PlusServlet
 
-計算はServletで行うこと
+- クエリ文字列で送信された2つの値を足し算する。
+- 足し算の結果をリクエストスコープに設定する。
+
+*** plus.jsp
+
+リクエストスコープから値を取り出して表示する。
+
+#+BEGIN_SRC jsp
+<c:out value="${result}" />
+#+END_SRC
+
+
+** 課題1-2: POSTリクエスト
+
+POSTリクエストでフォームから送信された値を足し算する。
+
+*** plus.html
+
+#+BEGIN_SRC html
+<form method='POST' action='...'>
+  <input name='x' type='text' />
+  <input name='y' type='text' />
+  <input type='submit' value='submit'/>
+</form>
+#+END_SRC
+
+*** PlusServlet
+
+- POSTされたパラメータの足し算をする。
+- 足し算の結果をリクエストスコープに設定する。
+
+*** plus.jsp
+
+GETと同じ物を使う。
 
 
 * 課題2: JSPからServletへと変換されたJavaファイルを確認せよ。
