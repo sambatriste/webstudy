@@ -9,6 +9,13 @@ webstudy.HelloServerを動かして、サーバ側でどのようなリクエス
 http://localhost:7373/hello
 
 
+** 課題2-1: （オプション）好きなWebページを開発者ツールで見てみよう。
+
+- どんな通信をしているか
+- 表示されたページはどんなDOMツリーになっているか
+
+開発者ツールを使ったことがない人は、ここで慣れてみよう。
+
 * 課題3: HelloServletと同じものをJSPで作ってみよう
 
 http://localhost:7373/hello.jsp
