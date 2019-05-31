@@ -26,7 +26,7 @@ Browser <-- WebServer : Response(index.html)
 #+END_SRC
 
 #+RESULTS:
-[[file:static-http.png]]
+[[file:./static-http.png]]
 
 ** Webアプリケーション
 
