@@ -2,19 +2,23 @@
 
 ** ルーティング
 
-*** Servlet3.0までのルーティング
+*** Servletのルーティング(～Servlet2.5)
 
 web.xmlにサーブレットを登録する。
 
 #+BEGIN_SRC xml
 
 <servlet>
+  <!-- サーブレットの名前 -->
   <servlet-name>HelloServlet</servlet-name>
+  <!-- クラス -->
   <servlet-class>webstudy.HelloServlet</servlet-class>
 </servlet>
 
 <servlet-mapping>
+  <!-- サーブレットの名前 -->
   <servlet-name>helloServlet</servlet-name>
+  <!-- マッチするURLパターン -->
   <url-pattern>/hello</url-pattern>
 </servlet-mapping>
 
@@ -31,6 +35,25 @@ HTTPメソッドに応じて、オーバーライドしたメソッドが呼び�
 | POST         | doPost            | <form method="post">の時                           |
 
 とりあえず、上の2つを覚えればよい。
+
+
+#+BEGIN_SRC java
+
+/* URLが /hello のときに呼ばれる */
+public class HelloServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    // GETメソッドの時に呼ばれる
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    // POTSメソッドの時に呼ばれる
+    }
+}
+
+#+END_SRC
 
 
 *** 【参考】Servlet3.0でのルーティング
@@ -55,10 +78,47 @@ public class HelloServlet extends HttpServlet {
 - 前準備(Servletでの処理)
   - JSPでのレンダリング時必要な情報をリクエストスコープに設定する（JSPに引き継ぐため）
   - JSPへフォワードする
-- サーブレットコンテナでの処理
+- (サーブレットコンテナでの処理)
   - （初回のみ）JSPファイルからServletへの変換（Javaソース生成）
   - （初回のみ）コンパイル(classファイル生成)
   - クラスを実行
 - JSP
   - リクエストスコープ、セッションスコープから値を取得する
   - HTMLを生成する
+
+
+
+*** リクエストスコープ
+
+何か値を格納できる場所。
+主に、ServletからJSPに値を引き渡すために使う。
+
+- そのリクエストを扱う間、有効
+  - そのリクエストが終わったら消える
+- リクエスト毎なので、違うユーザが同時にアクセスしても別物
+
+#+BEGIN_SRC java
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        // リクエストスコープに"current"という名前で、現在日時を設定
+        req.setAttribute("current", new Date());
+    }
+#+END_SRC
+
+#+BEGIN_SRC jsp
+${requestScope.current}
+#+END_SRC
+
+または、単に、
+
+#+BEGIN_SRC jsp
+${current}
+#+END_SRC
+
+
+*** JSPフォワード
+
+#+BEGIN_SRC java
+req.getRequestDispatcher("/path/to/forward.jsp")
+   .forward(req, resp);
+#+END_SRC

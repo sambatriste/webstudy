@@ -16,7 +16,48 @@ http://localhost:7373/hello
 
 開発者ツールを使ったことがない人は、ここで慣れてみよう。
 
-* 課題3: HelloServletと同じものをJSPで作ってみよう
 
-http://localhost:7373/hello.jsp
+* 課題3: index.htmlをおいてみよう
+
+src/main/webapp/index.html
+
+#+BEGIN_SRC html
+<!DOCTYPE html>
+<html lang='ja'>
+<head>
+    <title>Welcome</title>
+</head>
+<body>
+<h1>Welcome</h1>
+<!-- ここに何か書いてみる -->
+</body>
+</html>
+#+END_SRC
+
+
+
+* 課題4: HelloServletと同じものをJSPで作ってみよう
+
+http://localhost:7373/hello.jsp?to=john
+
+で
+#+BEGIN_EXAMPLE
+Hello john!
+#+END_EXAMPLE
+と表示されること。
+
+
+** ヒント: リクエストパラメーターの取り出し方
+
+#+BEGIN_EXAMPLE
+/hello.jsp?to=john
+#+END_EXAMPLE
+のとき、
+
+#+BEGIN_SRC jsp
+${param.to}
+#+END_SRC
+で、johnが取り出せる。
+
+https://www.techscore.com/tech/Java/JavaEE/JSP/12/
 
