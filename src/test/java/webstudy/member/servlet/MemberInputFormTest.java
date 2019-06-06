@@ -17,24 +17,16 @@ public class MemberInputFormTest {
     public void testValid() {
         form.setFamilyName("山田");
         form.setLastName("太郎");
-        ValidationResult<MemberInputForm> result = form.validate();
+        ValidationResult result = form.validate();
         assertThat(result.isValid(), is(true));
     }
 
     @Test
     public void testEmpty() {
-        ValidationResult<MemberInputForm> result = form.validate();
+        ValidationResult result = form.validate();
         assertThat(result.isError(), is(true));
-        {
-            Set<String> familyNameResult = result.get("familyName");
-            assertThat(familyNameResult, hasItem("姓を入力してください。"));
-            assertThat(familyNameResult.size(), is(1));
-        }
-        {
-            Set<String> lastNameResult = result.get("lastName");
-            assertThat(lastNameResult, hasItem("名を入力してください。"));
-            assertThat(lastNameResult.size(), is(1));
-        }
+        assertThat(result.get("familyName"), is("姓を入力してください。"));
+        assertThat(result.get("lastName"), is("名を入力してください。"));
         assertThat(result.size(), is(2));
     }
 
@@ -48,19 +40,10 @@ public class MemberInputFormTest {
                                    + "1234567890" + "12345"
         );
 
-        ValidationResult<MemberInputForm> result = form.validate();
-
+        ValidationResult result = form.validate();
         assertThat(result.isError(), is(true));
-        {
-            Set<String> familyNameResult = result.get("familyName");
-            assertThat(familyNameResult, hasItem("姓は1〜64文字で入力してください。"));
-            assertThat(familyNameResult.size(), is(1));
-        }
-        {
-            Set<String> lastNameResult = result.get("lastName");
-            assertThat(lastNameResult, hasItem("名は1〜64文字で入力してください。"));
-            assertThat(lastNameResult.size(), is(1));
-        }
+        assertThat(result.get("familyName"), is("姓は1〜64文字で入力してください。"));
+        assertThat(result.get("lastName"), is("名は1〜64文字で入力してください。"));
         assertThat(result.size(), is(2));
     }
 

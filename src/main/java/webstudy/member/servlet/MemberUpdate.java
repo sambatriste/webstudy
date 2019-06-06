@@ -1,5 +1,6 @@
 package webstudy.member.servlet;
 
+import webstudy.entity.Member;
 import webstudy.member.form.MemberUpdateForm;
 import webstudy.member.serivce.MemberService;
 import webstudy.validation.ValidationResult;
@@ -17,7 +18,7 @@ public class MemberUpdate extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         MemberUpdateForm form = new MemberUpdateForm(req.getParameterMap());
-        ValidationResult<MemberUpdateForm> result = form.validate();
+        ValidationResult result = form.validate();
         if (result.isError()) {
             req.setAttribute("member", form);
             req.setAttribute("errors", result);
@@ -25,7 +26,9 @@ public class MemberUpdate extends HttpServlet {
                .forward(req, resp);
             return;
         }
-        new MemberService().update(form.toEntity());
+        MemberService memberService = new MemberService();
+        Member member = form.toEntity();
+        memberService.update(member);
         resp.sendRedirect("list");
     }
 }

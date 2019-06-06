@@ -18,29 +18,19 @@ public class MemberUpdateFormTest {
         form.setMemberId("1");
         form.setFamilyName("山田");
         form.setLastName("太郎");
-        ValidationResult<MemberUpdateForm> result = form.validate();
+        ValidationResult result = form.validate();
         assertThat(result.isValid(), is(true));
     }
 
     @Test
     public void testEmpty() {
-        ValidationResult<MemberUpdateForm> result = form.validate();
+        ValidationResult result = form.validate();
         assertThat(result.isError(), is(true));
-        {
-            Set<String> memberIdResult = result.get("memberId");
-            assertThat(memberIdResult, hasItem("メンバーIDを入力してください。"));
-            assertThat(memberIdResult.size(), is(1));
-        }
-        {
-            Set<String> familyNameResult = result.get("familyName");
-            assertThat(familyNameResult, hasItem("姓を入力してください。"));
-            assertThat(familyNameResult.size(), is(1));
-        }
-        {
-            Set<String> lastNameResult = result.get("lastName");
-            assertThat(lastNameResult, hasItem("名を入力してください。"));
-            assertThat(lastNameResult.size(), is(1));
-        }
+        assertThat(result.get("memberId"), is("メンバーIDを入力してください。"));
+        String familyNameResult = result.get("familyName");
+        assertThat(familyNameResult, is("姓を入力してください。"));
+        String lastNameResult = result.get("lastName");
+        assertThat(lastNameResult, is("名を入力してください。"));
         assertThat(result.size(), is(3));
     }
 
@@ -54,19 +44,11 @@ public class MemberUpdateFormTest {
                                  + "1234567890" + "12345"
         );
 
-        ValidationResult<MemberUpdateForm> result = form.validate();
-
+        ValidationResult result = form.validate();
         assertThat(result.isError(), is(true));
-        {
-            Set<String> familyNameResult = result.get("familyName");
-            assertThat(familyNameResult, hasItem("姓は1〜64文字で入力してください。"));
-            assertThat(familyNameResult.size(), is(1));
-        }
-        {
-            Set<String> lastNameResult = result.get("lastName");
-            assertThat(lastNameResult, hasItem("名は1〜64文字で入力してください。"));
-            assertThat(lastNameResult.size(), is(1));
-        }
+        assertThat(result.get("familyName"), is("姓は1〜64文字で入力してください。"));
+        String lastNameResult = result.get("lastName");
+        assertThat(lastNameResult, is("名は1〜64文字で入力してください。"));
         assertThat(result.size(), is(2));
     }
 

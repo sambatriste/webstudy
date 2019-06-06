@@ -18,29 +18,26 @@ public class MemberFindFormTest {
     @Test
     public void testValid() {
         form.setMemberId("1");
-        ValidationResult<MemberFindForm> result = form.validate();
+        ValidationResult result = form.validate();
         assertThat(result.isValid(), is(true));
     }
 
     @Test
     public void testInvalid() {
         form.setMemberId("a");
-        ValidationResult<MemberFindForm> result = form.validate();
+        ValidationResult result = form.validate();
         assertThat(result.isError(), is(true));
         assertThat(result.isError("memberId"), is(true));
-        Set<String> memberIdResult = result.get("memberId");
-        assertThat(memberIdResult, hasItem("メンバーIDは1から9桁の数字で入力してください。"));
-        assertThat(memberIdResult.size(), is(1));
+        assertThat(result.get("memberId"), is("メンバーIDは1から9桁の数字で入力してください。"));
+
     }
 
     @Test
     public void testNull() {
         form.setMemberId(null);
-        ValidationResult<MemberFindForm> result = form.validate();
+        ValidationResult result = form.validate();
         assertThat(result.isError(), is(true));
         assertThat(result.isError("memberId"), is(true));
-        Set<String> memberIdResult = result.get("memberId");
-        assertThat(memberIdResult, hasItem("メンバーIDを入力してください。"));
-        assertThat(memberIdResult.size(), is(1));
+        assertThat(result.get("memberId"), is("メンバーIDを入力してください。"));
     }
 }

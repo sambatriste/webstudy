@@ -19,12 +19,13 @@ public class MemberInputForUpdate extends HttpServlet {
             throws ServletException, IOException {
 
         MemberFindForm form = new MemberFindForm(req.getParameterMap());
-        ValidationResult<MemberFindForm> result = form.validate();
+        ValidationResult result = form.validate();
         if (result.isError()) {
             resp.sendError(400);  // リクエスト改ざん以外発生しない.
             return;
         }
-        Member member = new MemberService().findById(form.getMemberId());
+        MemberService memberService = new MemberService();
+        Member member = memberService.findById(form.getMemberId());
         if (member == null) {
             resp.sendError(404);
             return;

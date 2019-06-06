@@ -17,8 +17,8 @@ public class MemberList extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        MemberService service = new MemberService();
-        List<Member> allMembers = service.getAllMembers();
+        MemberService memberService = new MemberService();
+        List<Member> allMembers = memberService.getAllMembers();
         req.setAttribute("memberList", allMembers);
         req.getRequestDispatcher("/pages/member/memberList.jsp")
            .forward(req, resp);

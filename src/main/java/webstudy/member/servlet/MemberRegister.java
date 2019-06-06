@@ -1,5 +1,6 @@
 package webstudy.member.servlet;
 
+import webstudy.entity.Member;
 import webstudy.member.form.MemberInputForm;
 import webstudy.member.serivce.MemberService;
 import webstudy.validation.ValidationResult;
@@ -18,7 +19,7 @@ public class MemberRegister extends HttpServlet {
             throws ServletException, IOException {
 
         MemberInputForm form = new MemberInputForm(req.getParameterMap());
-        ValidationResult<MemberInputForm> result = form.validate();
+        ValidationResult result = form.validate();
         if (result.isError()) {
             req.setAttribute("member", form);
             req.setAttribute("errors", result);
@@ -28,7 +29,8 @@ public class MemberRegister extends HttpServlet {
         }
 
         MemberService service = new MemberService();
-        service.register(form.toEntity());
+        Member member = form.toEntity();
+        service.register(member);
         resp.sendRedirect("list");
     }
 }

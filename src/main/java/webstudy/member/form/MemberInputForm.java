@@ -24,8 +24,8 @@ public class MemberInputForm {
         lastName = getFirst(params, "lastName");
     }
 
-    public ValidationResult<MemberInputForm> validate() {
-        ValidationResult<MemberInputForm> result = new ValidationResult<>();
+    public ValidationResult validate() {
+        ValidationResult result = new ValidationResult();
         if (familyName == null || familyName.isEmpty()) {
             result.put("familyName", "姓を入力してください。");
         } else if (familyName.length() > 64) {

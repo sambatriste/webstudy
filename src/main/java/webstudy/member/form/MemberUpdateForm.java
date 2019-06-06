@@ -27,8 +27,8 @@ public class MemberUpdateForm {
         version = getFirst(params, "version");
     }
 
-    public ValidationResult<MemberUpdateForm> validate() {
-        ValidationResult<MemberUpdateForm> result = new ValidationResult<>();
+    public ValidationResult validate() {
+        ValidationResult result = new ValidationResult();
 
         if (memberId == null) {
             result.put("memberId", "メンバーIDを入力してください。");

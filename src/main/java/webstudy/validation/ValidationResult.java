@@ -13,9 +13,10 @@ import java.util.TreeMap;
  * </ul>
  * を保持している。
  *
- * @param <T> バリデーション対象となったBeanの型
+ * データ構造を複雑にしないため、1つのプロパティに対して
+ * 1つのエラーメッセージだけを保持できるようにしている。
  */
-public class ValidationResult<T> extends TreeMap<String, Set<String>> {
+public class ValidationResult extends TreeMap<String, String> {
 
     public ValidationResult() {
     }
@@ -48,8 +49,4 @@ public class ValidationResult<T> extends TreeMap<String, Set<String>> {
         return isEmpty();
     }
 
-    public void put(String path, String message) {
-        Set<String> messages = computeIfAbsent(path, key -> new LinkedHashSet<>());
-        messages.add(message);
-    }
 }

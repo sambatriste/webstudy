@@ -31,8 +31,8 @@ public class MemberFindForm {
         this.memberId = memberId;
     }
 
-    public ValidationResult<MemberFindForm> validate() {
-        ValidationResult<MemberFindForm> result = new ValidationResult<>();
+    public ValidationResult validate() {
+        ValidationResult result = new ValidationResult();
         if (memberId == null) {
             result.put("memberId", "メンバーIDを入力してください。");
         } else if (memberId.length() > 9 || !isInteger(memberId) ) {
