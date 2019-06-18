@@ -1,0 +1,126 @@
+* トランザクション
+
+一連の操作が全て成功するか、全て失敗するかのいずれかとなる。
+
+
+** トランザクション境界
+
+フレームワークおよび設定によるが、ざっくりHTTPリクエスト単位と考えてよい。
+
+*** 今回の場合
+
+サーブレットフィルターを使ってトランザクション制御を行っている。
+
+**** web.xml
+#+BEGIN_SRC xml
+  <filter>
+    <filter-name>TransactionFilter</filter-name>
+    <filter-class>webstudy.db.TransactionFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>TransactionFilter</filter-name>
+    <url-pattern>*</url-pattern>
+  </filter-mapping>
+#+END_SRC
+
+**** TransactionFilter.java
+
+#+BEGIN_SRC java
+public class TransactionFilter implements Filter {
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        TransactionManager tm = AppConfig.singleton().getTransactionManager();
+        tm.required(() -> {
+            doFilterInTransaction(request, response, chain);
+        });
+    }
+
+    private void doFilterInTransaction(ServletRequest request,
+                                       ServletResponse response,
+                                       FilterChain chain) {
+        try {
+            chain.doFilter(request, response);
+        } catch (IOException | ServletException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    // 中略
+}
+
+#+END_SRC
+
+サーブレットフィルターを使うと、処理の前後に共通処理を行える（例：ログ出力）。
+このような仕組みは、どのフレームワークにも存在する（書き方や実現方法は異なる）。
+
+
+
+** コミット/ロールバック
+
+フレームワークによるが、
+
+- 正常に終了(return)するとコミット
+- 例外が送出されたらロールバック
+
+と考える。
+
+#+BEGIN_SRC java
+
+if (...) {
+    // ロールバックされる
+    throw new ApplicationException();
+}
+// コミットされる
+return response;
+
+#+END_SRC
+
+
+*** 良くない例
+
+- MEMBERテーブルを更新する
+- DEPTテーブルを更新する
+という処理があるとする。
+
+#+BEGIN_SRC java
+// メンバーを更新
+try {
+   update(member);
+} catch (Exception e) {
+   LOGGER.logError(e);
+}
+
+try {
+   // 部署を更新
+   update(dept);
+} catch(Exception e) {
+   LOGGER.logError(e);
+   // ここでキャッチした例外が喪失し、処理が継続してしまう。
+}
+
+return response;
+
+#+END_SRC
+
+上記の例で、メンバーの更新に成功したが、部署の更新に失敗したとする。
+
+- 例外がスローされないため、トランザクションはコミットされる
+- DEPTテーブルの更新は失敗したが、MEMBERテーブルは更新されている
+- MEMBERとDEPTで不整合が発生する
+
+というような事象が起こってしまう。
+
+
+** まとめ
+
+- フレームワークがトランザクションの制御をやってくれる
+- 典型例：処理成功=コミット、処理失敗(例外スロー)=ロールバック
+- 例外をスローしなければ、正常終了とみなされる
+
+
+フレームワーク毎にやり方が違うので、以下の点を確認しておく
+
+- どこからどこまでトランザクションの区間であるか
+- どうすればコミットされるか、どうすればロールバックされるか
